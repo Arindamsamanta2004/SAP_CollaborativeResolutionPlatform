@@ -1,0 +1,69 @@
+.page-transition {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: opacity 300ms ease-in-out;
+}
+
+.page-transition.fadeIn {
+  opacity: 1;
+}
+
+.page-transition.fadeOut {
+  opacity: 0;
+}
+
+/* Loading indicator styles */
+.page-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: var(--sapBackgroundColor);
+  z-index: 10;
+  padding: 2rem;
+}
+
+/* Loading spinner */
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid var(--sapList_BorderColor);
+  border-top: 4px solid var(--sapHighlightColor);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 1rem;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Ensure content is hidden properly during loading */
+.page-transition [aria-hidden="true"] {
+  visibility: hidden;
+}
+
+/* Ensure proper focus management during transitions */
+.page-transition:focus {
+  outline: none;
+}
+
+/* Improve animation performance */
+.page-transition {
+  will-change: opacity;
+  transform: translateZ(0);
+}
+
+/* Ensure loading text is accessible */
+.page-loading p {
+  font-size: var(--sapFontSize);
+  color: var(--sapTextColor);
+  margin: 0;
+}

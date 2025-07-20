@@ -1,0 +1,171 @@
+.ticket-card {
+  margin-bottom: 1rem;
+  transition: transform 0.2s ease-in-out;
+  box-shadow: var(--sapContent_Shadow0);
+  border-radius: var(--sapElement_BorderCornerRadius);
+}
+
+.ticket-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--sapContent_Shadow1);
+}
+
+.ticket-card-content {
+  padding: 1rem;
+}
+
+.ticket-description {
+  margin-bottom: 1rem;
+  border-left: 3px solid var(--sapBrandColor);
+  padding-left: 0.75rem;
+  color: var(--sapTextColor);
+}
+
+.ai-classification {
+  background-color: var(--sapBackgroundColor);
+  padding: 1rem;
+  border-radius: var(--sapElement_BorderCornerRadius);
+  margin-top: 1rem;
+  border: var(--sapElement_BorderWidth) solid var(--sapList_BorderColor);
+}
+
+.classification-badges {
+  display: flex;
+  gap: 0.5rem;
+  margin: 0.5rem 0;
+}
+
+.urgency-badge, .complexity-badge, .action-badge {
+  padding: 0.25rem 0.5rem;
+  border-radius: 1rem;
+}
+
+.urgency-critical {
+  background-color: var(--sapNegativeColor);
+  color: var(--sapContent_ContrastIconColor);
+}
+
+.urgency-high {
+  background-color: var(--sapCriticalColor);
+  color: var(--sapContent_ContrastIconColor);
+}
+
+.urgency-medium {
+  background-color: var(--sapInformativeColor);
+  color: var(--sapContent_ContrastIconColor);
+}
+
+.urgency-low {
+  background-color: var(--sapPositiveColor);
+  color: var(--sapContent_ContrastIconColor);
+}
+
+.complexity-high {
+  background-color: var(--sapNegativeColor);
+  color: var(--sapContent_ContrastIconColor);
+}
+
+.complexity-medium {
+  background-color: var(--sapCriticalColor);
+  color: var(--sapContent_ContrastIconColor);
+}
+
+.complexity-low {
+  background-color: var(--sapPositiveColor);
+  color: var(--sapContent_ContrastIconColor);
+}
+
+.skill-tags {
+  margin: 1rem 0;
+}
+
+.skill-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.skill-badge {
+  background-color: var(--sapBackgroundColor);
+  color: var(--sapBrandColor);
+  border: var(--sapElement_BorderWidth) solid var(--sapBrandColor);
+  border-radius: var(--sapElement_BorderCornerRadius);
+}
+
+.skill-database {
+  background-color: var(--sapBackgroundColor);
+  color: var(--sapChart_OrderedColor_1);
+  border-color: var(--sapChart_OrderedColor_1);
+}
+
+.skill-frontend {
+  background-color: var(--sapBackgroundColor);
+  color: var(--sapChart_OrderedColor_2);
+  border-color: var(--sapChart_OrderedColor_2);
+}
+
+.skill-backend {
+  background-color: var(--sapBackgroundColor);
+  color: var(--sapChart_OrderedColor_3);
+  border-color: var(--sapChart_OrderedColor_3);
+}
+
+.skill-network {
+  background-color: var(--sapBackgroundColor);
+  color: var(--sapChart_OrderedColor_4);
+  border-color: var(--sapChart_OrderedColor_4);
+}
+
+.skill-security {
+  background-color: var(--sapBackgroundColor);
+  color: var(--sapChart_OrderedColor_5);
+  border-color: var(--sapChart_OrderedColor_5);
+}
+
+.skill-devops {
+  background-color: var(--sapBackgroundColor);
+  color: var(--sapChart_OrderedColor_6);
+  border-color: var(--sapChart_OrderedColor_6);
+}
+
+.skill-integration {
+  background-color: var(--sapBackgroundColor);
+  color: var(--sapChart_OrderedColor_7);
+  border-color: var(--sapChart_OrderedColor_7);
+}
+
+.skill-analytics {
+  background-color: var(--sapBackgroundColor);
+  color: var(--sapChart_OrderedColor_8);
+  border-color: var(--sapChart_OrderedColor_8);
+}
+
+.recommended-action {
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.action-crp {
+  background-color: var(--sapPositiveColor);
+  color: var(--sapContent_ContrastIconColor);
+  font-weight: bold;
+}
+
+.action-standard {
+  background-color: var(--sapInformativeColor);
+  color: var(--sapContent_ContrastIconColor);
+}
+
+.routing-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+  justify-content: flex-end;
+}
+
+.processing-indicator {
+  margin-top: 1rem;
+}

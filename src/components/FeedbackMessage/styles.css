@@ -1,0 +1,101 @@
+.feedback-message {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  border-radius: var(--sapElement_BorderCornerRadius);
+  margin-bottom: 1rem;
+  box-shadow: var(--sapContent_Shadow0);
+  animation: slide-in 0.3s ease-out;
+  max-width: 100%;
+}
+
+.feedback-message-success {
+  background-color: rgba(var(--sapPositiveColor-rgb, 16, 126, 62), 0.1);
+  border-left: 4px solid var(--sapPositiveColor);
+  color: var(--sapPositiveColor);
+}
+
+.feedback-message-error {
+  background-color: rgba(var(--sapNegativeColor-rgb, 187, 0, 0), 0.1);
+  border-left: 4px solid var(--sapNegativeColor);
+  color: var(--sapNegativeColor);
+}
+
+.feedback-message-warning {
+  background-color: rgba(var(--sapCriticalColor-rgb, 233, 115, 12), 0.1);
+  border-left: 4px solid var(--sapCriticalColor);
+  color: var(--sapCriticalColor);
+}
+
+.feedback-message-info {
+  background-color: rgba(var(--sapInformativeColor-rgb, 0, 112, 242), 0.1);
+  border-left: 4px solid var(--sapInformativeColor);
+  color: var(--sapInformativeColor);
+}
+
+.feedback-icon {
+  font-size: 1.25rem;
+  margin-right: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.feedback-text {
+  flex: 1;
+  font-size: var(--sapFontSize);
+}
+
+.feedback-close-btn {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0;
+  margin-left: 0.75rem;
+  color: inherit;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+}
+
+.feedback-close-btn:hover,
+.feedback-close-btn:focus {
+  opacity: 1;
+}
+
+.feedback-close-btn:focus {
+  outline: 2px solid var(--sapContent_FocusColor);
+  outline-offset: 2px;
+}
+
+@keyframes slide-in {
+  from {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* High contrast mode adjustments */
+@media (forced-colors: active) {
+  .feedback-message {
+    border: 1px solid CanvasText;
+  }
+  
+  .feedback-message-success,
+  .feedback-message-error,
+  .feedback-message-warning,
+  .feedback-message-info {
+    border-left-width: 4px;
+  }
+}
+
+/* Reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .feedback-message {
+    animation: none;
+  }
+}

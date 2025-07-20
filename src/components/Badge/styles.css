@@ -1,0 +1,16 @@
+.custom-badge {
+  display: inline-block;
+  padding: 0.25rem 0.5rem;
+  border-radius: 1rem;
+  font-size: 0.75rem;
+  font-weight: bold;
+}
+
+.custom-badge.color-1 { background-color: #e5f0fa; color: #0a6ed1; }
+.custom-badge.color-2 { background-color: #ffeaf4; color: #bb0057; }
+.custom-badge.color-3 { background-color: #ebf5ec; color: #107e3e; }
+.custom-badge.color-4 { background-color: #f5f0e5; color: #8b6c00; }
+.custom-badge.color-5 { background-color: #f9e8e8; color: #ab0000; }
+.custom-badge.color-6 { background-color: #e5e9f0; color: #354a5f; }
+.custom-badge.color-7 { background-color: #f0e5f5; color: #6a097d; }
+.custom-badge.color-8 { background-color: #e5f5f0; color: #046c7a; }

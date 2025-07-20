@@ -1,0 +1,157 @@
+.solution-merge-panel {
+  margin-top: 1rem;
+  padding: 1rem;
+  border-radius: var(--sapElement_BorderCornerRadius);
+  background-color: var(--sapBackgroundColor);
+  border: var(--sapElement_BorderWidth) solid var(--sapList_BorderColor);
+  box-shadow: var(--sapContent_Shadow0);
+}
+
+.solution-merge-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.solution-merge-status {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.solution-merge-progress {
+  margin: 1rem 0;
+}
+
+.solution-merge-threads {
+  margin: 1rem 0;
+}
+
+.solution-thread-item {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem;
+  margin-bottom: 0.5rem;
+  border-radius: var(--sapElement_BorderCornerRadius);
+  background-color: var(--sapContent_ForegroundColor);
+  border-left: 4px solid var(--sapNeutralColor);
+  box-shadow: var(--sapContent_Shadow0);
+}
+
+.solution-thread-item.resolved {
+  border-left-color: var(--sapPositiveColor);
+}
+
+.solution-thread-item.in-progress {
+  border-left-color: var(--sapCriticalColor);
+}
+
+.solution-thread-item.open {
+  border-left-color: var(--sapInformativeColor);
+}
+
+.solution-thread-status {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.solution-thread-icon {
+  margin-right: 0.75rem;
+  color: var(--sapContent_NonInteractiveIconColor);
+}
+
+.solution-thread-icon.resolved {
+  color: var(--sapPositiveColor);
+}
+
+.solution-thread-icon.in-progress {
+  color: var(--sapCriticalColor);
+}
+
+.solution-thread-icon.open {
+  color: var(--sapInformativeColor);
+}
+
+.solution-merge-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.solution-merge-content {
+  margin-top: 1rem;
+}
+
+.solution-merge-textarea {
+  width: 100%;
+  min-height: 200px;
+  padding: 0.75rem;
+  border: var(--sapElement_BorderWidth) solid var(--sapField_BorderColor);
+  border-radius: var(--sapElement_BorderCornerRadius);
+  font-family: var(--sapFontFamily);
+  font-size: var(--sapFontSize);
+  line-height: 1.5;
+  resize: vertical;
+}
+
+.solution-merge-dialog {
+  width: 600px;
+  max-width: 90vw;
+}
+
+.solution-merge-dialog-content {
+  padding: 1rem;
+}
+
+.solution-merge-dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  padding: 1rem;
+  border-top: var(--sapElement_BorderWidth) solid var(--sapList_BorderColor);
+}
+
+.solution-merge-summary {
+  margin-top: 1rem;
+  padding: 1rem;
+  background-color: rgba(8, 84, 160, 0.05);
+  border-radius: var(--sapElement_BorderCornerRadius);
+  border-left: 4px solid var(--sapInformativeColor);
+}
+
+.solution-merge-confirmation {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  padding: 1rem;
+  background-color: rgba(16, 126, 62, 0.05);
+  border-radius: var(--sapElement_BorderCornerRadius);
+  border-left: 4px solid var(--sapPositiveColor);
+}
+
+.solution-merge-confirmation-icon {
+  color: var(--sapPositiveColor);
+  font-size: 1.5rem;
+}
+
+.solution-merge-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  text-align: center;
+  color: var(--sapContent_NonInteractiveIconColor);
+}
+
+.solution-merge-empty-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  color: var(--sapContent_NonInteractiveIconColor);
+}

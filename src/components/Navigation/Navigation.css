@@ -1,0 +1,143 @@
+.navigation-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* Workflow progress indicator */
+.navigation-workflow-progress {
+  padding: 1rem;
+  margin-top: auto;
+  border-top: 1px solid var(--sapList_BorderColor);
+  background-color: var(--sapList_Background);
+}
+
+.workflow-progress-title {
+  font-size: var(--sapFontHeader5Size);
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  color: var(--sapTextColor);
+}
+
+.workflow-progress-container {
+  height: 8px;
+  background-color: var(--sapList_BorderColor);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 0.5rem;
+}
+
+.workflow-progress-bar {
+  height: 100%;
+  background-color: var(--sapHighlightColor);
+  border-radius: 4px;
+  transition: width 0.3s ease-in-out;
+}
+
+.workflow-progress-label {
+  font-size: var(--sapFontSize);
+  color: var(--sapTextColor);
+  margin-bottom: 1rem;
+}
+
+/* Workflow badge */
+.workflow-badge {
+  margin-left: 0.5rem;
+}
+
+/* Workflow stages navigation */
+.workflow-stages-navigation {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0.5rem;
+}
+
+.workflow-stage-button {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background-color: var(--sapList_Background);
+  border: 2px solid var(--sapList_BorderColor);
+  color: var(--sapContent_LabelColor);
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.2s ease-in-out;
+}
+
+.workflow-stage-button:focus {
+  outline: 2px solid var(--sapContent_FocusColor);
+  outline-offset: 2px;
+}
+
+.workflow-stage-button.active {
+  background-color: var(--sapButton_Background);
+  border-color: var(--sapButton_BorderColor);
+  color: var(--sapButton_TextColor);
+}
+
+.workflow-stage-button.current {
+  background-color: var(--sapButton_Emphasized_Background);
+  border-color: var(--sapButton_Emphasized_BorderColor);
+  color: var(--sapButton_Emphasized_TextColor);
+  transform: scale(1.1);
+  box-shadow: var(--sapContent_Shadow1);
+}
+
+/* Connect the stage buttons with lines */
+.workflow-stages-navigation {
+  position: relative;
+}
+
+.workflow-stages-navigation::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 10%;
+  right: 10%;
+  height: 2px;
+  background-color: var(--sapList_BorderColor);
+  z-index: 0;
+  transform: translateY(-50%);
+}
+
+.workflow-stage-button {
+  z-index: 1;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .navigation-workflow-progress {
+    padding: 0.5rem;
+  }
+  
+  .workflow-stages-navigation {
+    margin-top: 1rem;
+  }
+  
+  .workflow-stage-button {
+    width: 1.5rem;
+    height: 1.5rem;
+    font-size: 0.75rem;
+  }
+}
+
+/* High contrast mode adjustments */
+@media (forced-colors: active) {
+  .workflow-stage-button {
+    forced-color-adjust: none;
+    border: 2px solid CanvasText;
+  }
+  
+  .workflow-stage-button.active,
+  .workflow-stage-button.current {
+    border: 2px solid Highlight;
+  }
+  
+  .workflow-progress-bar {
+    background-color: Highlight;
+  }
+}

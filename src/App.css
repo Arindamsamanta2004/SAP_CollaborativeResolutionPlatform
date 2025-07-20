@@ -1,0 +1,120 @@
+/* App layout */
+.app {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-color: var(--sapBackgroundColor);
+  color: var(--sapTextColor);
+}
+
+.app-content {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+.app-navigation {
+  width: 250px;
+  height: 100%;
+  overflow-y: auto;
+  border-right: var(--sapElement_BorderWidth) solid var(--sapList_BorderColor);
+  background-color: var(--sapContent_ForegroundColor);
+}
+
+.app-main {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem;
+  position: relative;
+  transition: all 0.3s ease-in-out;
+}
+
+/* SAP Fiori specific styling */
+.sap-page-header {
+  padding: 1rem;
+  background-color: var(--sapContent_ForegroundColor);
+  border-bottom: var(--sapElement_BorderWidth) solid var(--sapList_BorderColor);
+  margin-bottom: 1rem;
+  box-shadow: var(--sapContent_Shadow0);
+}
+
+.sap-page-title {
+  font-size: var(--sapFontHeader2Size);
+  color: var(--sapTextColor);
+  margin: 0;
+  font-weight: normal;
+}
+
+.sap-page-subtitle {
+  font-size: var(--sapFontHeader5Size);
+  color: var(--sapContent_NonInteractiveIconColor);
+  margin-top: 0.25rem;
+}
+
+.sap-card {
+  background-color: var(--sapContent_ForegroundColor);
+  border-radius: var(--sapElement_BorderCornerRadius);
+  box-shadow: var(--sapContent_Shadow0);
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.sap-panel {
+  background-color: var(--sapContent_ForegroundColor);
+  border-radius: var(--sapElement_BorderCornerRadius);
+  box-shadow: var(--sapContent_Shadow0);
+  margin-bottom: 1rem;
+}
+
+.sap-panel-header {
+  padding: 0.5rem 1rem;
+  border-bottom: var(--sapElement_BorderWidth) solid var(--sapList_BorderColor);
+  font-size: var(--sapFontHeader4Size);
+  font-weight: bold;
+}
+
+.sap-panel-content {
+  padding: 1rem;
+}
+
+/* Status indicators */
+.sap-status-positive {
+  color: var(--sapPositiveColor);
+}
+
+.sap-status-negative {
+  color: var(--sapNegativeColor);
+}
+
+.sap-status-critical {
+  color: var(--sapCriticalColor);
+}
+
+.sap-status-neutral {
+  color: var(--sapNeutralColor);
+}
+
+/* Responsive grid system */
+.sap-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-gap: 1rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .app-content {
+    flex-direction: column;
+  }
+  
+  .app-navigation {
+    width: 100%;
+    height: auto;
+    border-right: none;
+    border-bottom: var(--sapElement_BorderWidth) solid var(--sapList_BorderColor);
+  }
+  
+  .sap-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}

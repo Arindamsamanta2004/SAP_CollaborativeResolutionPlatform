@@ -1,0 +1,241 @@
+.engineer-availability-panel {
+  height: 100%;
+}
+
+.engineer-panel-header {
+  padding: 1rem;
+  border-bottom: var(--sapElement_BorderWidth) solid var(--sapList_BorderColor);
+}
+
+.engineer-list {
+  max-height: 500px;
+  overflow-y: auto;
+}
+
+.engineer-list-item {
+  padding: 0.75rem 1rem;
+  border-bottom: var(--sapElement_BorderWidth) solid var(--sapList_BorderColor);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.engineer-list-item:hover {
+  background-color: var(--sapList_SelectionBackgroundColor);
+}
+
+.engineer-avatar {
+  position: relative;
+}
+
+.engineer-avatar::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 2px solid white;
+}
+
+.engineer-avatar.available::after {
+  background-color: var(--sapPositiveColor); /* Green for available */
+}
+
+.engineer-avatar.busy::after {
+  background-color: var(--sapCriticalColor); /* Orange for busy */
+}
+
+.engineer-avatar.offline::after {
+  background-color: var(--sapNegativeColor); /* Red for offline */
+}
+
+.engineer-list-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.engineer-name {
+  font-weight: 600;
+}
+
+.engineer-metadata {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.engineer-workload {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.25rem;
+}
+
+.engineer-workload-label {
+  font-size: var(--sapFontHeader6Size);
+  color: var(--sapContent_NonInteractiveIconColor);
+  white-space: nowrap;
+}
+
+.engineer-workload-indicator {
+  flex: 1;
+  height: 0.5rem;
+}
+
+.engineer-workload-value {
+  font-size: var(--sapFontHeader6Size);
+  color: var(--sapTextColor);
+  white-space: nowrap;
+}
+
+.engineer-primary-skill {
+  background-color: var(--sapBackgroundColor) !important;
+  color: var(--sapTextColor) !important;
+}
+
+.engineer-lead-badge {
+  background-color: rgba(16, 126, 62, 0.1) !important;
+  color: var(--sapPositiveColor) !important;
+  font-weight: 600 !important;
+}
+
+.engineer-empty-state {
+  padding: 2rem;
+  text-align: center;
+  color: var(--sapContent_NonInteractiveIconColor);
+}
+
+/* Engineer Details Dialog */
+.engineer-details-dialog {
+  min-width: 600px;
+}
+
+.engineer-details-content {
+  padding: 1rem;
+}
+
+.engineer-details-header {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.engineer-details-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.engineer-details-badges {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.engineer-details-section {
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: var(--sapElement_BorderWidth) solid var(--sapList_BorderColor);
+}
+
+.engineer-details-section:last-child {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.engineer-details-skills {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 0.75rem;
+}
+
+.engineer-details-skill {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.engineer-details-expertise {
+  flex: 1;
+  height: 8px;
+  background-color: var(--sapBackgroundColor);
+  border-radius: var(--sapElement_BorderCornerRadius);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.engineer-details-expertise-bar {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  background-color: var(--sapBrandColor);
+  border-radius: var(--sapElement_BorderCornerRadius);
+}
+
+.engineer-details-expertise span {
+  margin-left: 0.5rem;
+  font-size: var(--sapFontSize);
+  color: var(--sapTextColor);
+}
+
+.engineer-details-workload {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 0.75rem;
+}
+
+.engineer-details-workload-indicator {
+  flex: 1;
+  height: 0.75rem;
+}
+
+.engineer-details-workload-value {
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.engineer-details-no-threads {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  gap: 0.5rem;
+  color: var(--sapContent_NonInteractiveIconColor);
+  background-color: var(--sapBackgroundColor);
+  border-radius: var(--sapElement_BorderCornerRadius);
+  margin-top: 0.75rem;
+}
+
+.engineer-details-no-threads-icon {
+  font-size: 2rem;
+  color: var(--sapContent_NonInteractiveIconColor);
+}
+
+.engineer-details-threads {
+  margin-top: 0.75rem;
+  max-height: 200px;
+  overflow-y: auto;
+  border: var(--sapElement_BorderWidth) solid var(--sapList_BorderColor);
+  border-radius: var(--sapElement_BorderCornerRadius);
+}
+
+.engineer-details-thread-item {
+  border-bottom: var(--sapElement_BorderWidth) solid var(--sapList_BorderColor);
+}
+
+.engineer-details-thread-title {
+  font-weight: 600;
+}
+
+.engineer-details-availability-actions {
+  margin-top: 0.75rem;
+}

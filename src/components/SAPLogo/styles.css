@@ -1,0 +1,10 @@
+.sap-logo-container {
+  display: flex;
+  align-items: center;
+}
+
+.sap-logo {
+  height: 24px;
+  width: auto;
+  color: var(--sapContent_ContrastTextColor);
+}

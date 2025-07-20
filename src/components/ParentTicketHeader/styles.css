@@ -1,0 +1,109 @@
+.parent-ticket-header {
+  margin-bottom: 1.5rem;
+}
+
+.parent-ticket-content {
+  display: flex;
+  padding: 1.5rem;
+}
+
+.parent-ticket-main {
+  flex: 3;
+  display: flex;
+}
+
+.parent-ticket-id-section {
+  flex: 0 0 150px;
+  margin-right: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.parent-ticket-details {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.parent-ticket-description {
+  max-height: 100px;
+  overflow-y: auto;
+  padding-right: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.parent-ticket-metadata {
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid #e5e5e5;
+}
+
+.parent-ticket-info-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.parent-ticket-sidebar {
+  flex: 1;
+  max-width: 300px;
+  border-left: 1px solid #e5e5e5;
+  padding-left: 1.5rem;
+  margin-left: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.parent-ticket-ai-classification,
+.parent-ticket-lead-engineer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.parent-ticket-ai-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.parent-ticket-skill-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+}
+
+.parent-ticket-lead-info {
+  gap: 0.75rem;
+}
+
+@media (max-width: 992px) {
+  .parent-ticket-content {
+    flex-direction: column;
+  }
+  
+  .parent-ticket-sidebar {
+    max-width: none;
+    border-left: none;
+    border-top: 1px solid #e5e5e5;
+    margin-left: 0;
+    padding-left: 0;
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .parent-ticket-main {
+    flex-direction: column;
+  }
+  
+  .parent-ticket-id-section {
+    margin-right: 0;
+    margin-bottom: 1rem;
+  }
+}

@@ -1,0 +1,184 @@
+.customer-portal {
+  width: 100%;
+  min-height: calc(100vh - 120px); /* Adjust for header/footer */
+  background-color: var(--sapBackgroundColor);
+  padding: 2rem;
+}
+
+.customer-portal-container {
+  max-width: 800px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.customer-portal-header {
+  text-align: center;
+  margin-bottom: 2rem;
+  width: 100%;
+  position: relative;
+}
+
+.demo-tools {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.demo-tools-container {
+  gap: 0.5rem;
+}
+
+.customer-portal-content {
+  width: 100%;
+  margin-bottom: 2rem;
+}
+
+.demo-info-panel {
+  width: 100%;
+  margin-top: 2rem;
+}
+
+.demo-info-content {
+  padding: 1rem 0;
+}
+
+.demo-features-list {
+  margin-top: 1rem;
+  padding-left: 1.5rem;
+}
+
+.demo-features-list li {
+  margin-bottom: 0.5rem;
+}
+
+.feature-unavailable-message {
+  color: var(--sapNegativeColor);
+  font-size: 0.75rem;
+  margin-top: 0.25rem;
+}
+
+.customer-portal-footer {
+  margin-top: 2rem;
+  width: 100%;
+  text-align: center;
+}
+
+/* Form styling */
+.card-content {
+  padding: 1rem;
+}
+
+.ticket-form {
+  width: 100%;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+}
+
+.form-control {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+textarea.form-control {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.form-text {
+  display: block;
+  margin-top: 0.25rem;
+  font-size: 0.75rem;
+  color: #6c757d;
+}
+
+.form-actions {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.submit-button {
+  padding: 0.5rem 1rem;
+  background-color: #0070f2;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.submit-button:hover {
+  background-color: #0050d0;
+}
+
+/* Error styling */
+.error {
+  border-color: #bb0000 !important;
+}
+
+.error-message {
+  color: #bb0000;
+  font-size: 0.75rem;
+  margin-top: 0.25rem;
+}
+
+/* Attachments list */
+.attachments-list {
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+  background-color: #f5f5f5;
+  border-radius: 4px;
+}
+
+.attachments-list ul {
+  margin: 0.5rem 0 0 0;
+  padding-left: 1.5rem;
+}
+
+.attachments-list li {
+  margin-bottom: 0.25rem;
+}
+
+/* Success dialog */
+.success-dialog-content {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.dialog-footer {
+  display: flex;
+  justify-content: flex-end;
+  padding: 0.5rem;
+}
+
+/* Loading state */
+.submission-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem;
+  gap: 1rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .customer-portal {
+    padding: 1rem;
+  }
+}

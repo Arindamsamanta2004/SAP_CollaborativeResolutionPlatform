@@ -1,0 +1,70 @@
+.ticket-submission-form {
+  width: 100%;
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: var(--sapList_Background);
+  box-shadow: var(--sapContent_Shadow0);
+}
+
+.form-header {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  background-color: var(--sapBrandColor);
+  color: var(--sapContent_ContrastTextColor);
+}
+
+.form-header h2 {
+  margin-left: 1rem;
+  color: var(--sapContent_ContrastTextColor);
+}
+
+.ticket-form {
+  padding: 1.5rem;
+}
+
+.form-title {
+  margin-bottom: 1.5rem;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+}
+
+.description-textarea {
+  width: 100%;
+  min-height: 120px;
+}
+
+.form-actions {
+  margin-top: 2rem;
+}
+
+.submission-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem;
+  gap: 1rem;
+}
+
+/* Error states */
+.error-message {
+  color: var(--sapErrorColor);
+  font-size: 0.75rem;
+  margin-top: 0.25rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .ticket-form {
+    padding: 1rem;
+  }
+}

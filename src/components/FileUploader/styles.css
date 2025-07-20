@@ -1,0 +1,34 @@
+.file-uploader {
+  width: 100%;
+}
+
+.file-uploader-container {
+  gap: 1rem;
+}
+
+.upload-button {
+  align-self: flex-start;
+}
+
+.file-type-info {
+  font-size: 0.75rem;
+  color: var(--sapContent_LabelColor);
+  margin-bottom: 0.5rem;
+}
+
+.file-list {
+  width: 100%;
+  margin-top: 1rem;
+  border: 1px solid var(--sapList_BorderColor);
+  border-radius: 4px;
+}
+
+.file-list-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.error-message {
+  margin-top: 0.5rem;
+}

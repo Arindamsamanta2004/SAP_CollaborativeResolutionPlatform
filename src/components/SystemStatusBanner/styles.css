@@ -1,0 +1,27 @@
+.system-status-banner {
+  width: 100%;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.status-message-strip {
+  width: 100%;
+}
+
+.status-content {
+  width: 100%;
+}
+
+.status-message {
+  display: flex;
+  align-items: center;
+}
+
+.status-icon {
+  margin-right: 0.5rem;
+}
+
+.retry-button {
+  margin-left: 1rem;
+}

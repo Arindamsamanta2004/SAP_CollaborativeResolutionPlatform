@@ -1,0 +1,146 @@
+.statistics-card {
+  margin-bottom: 1rem;
+}
+
+.statistics-content {
+  padding: 1rem;
+}
+
+.statistics-empty {
+  padding: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+}
+
+.statistics-summary {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.stat-item {
+  text-align: center;
+  flex: 1;
+}
+
+.stat-label {
+  color: #6a6a6a;
+  margin-bottom: 0.5rem;
+}
+
+.statistics-badge {
+  background-color: #e5e5e5;
+  color: #333;
+  padding: 0.25rem 0.5rem;
+  border-radius: 1rem;
+  font-size: 0.75rem;
+  font-weight: bold;
+}
+
+.complexity-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.complexity-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.complexity-badge {
+  padding: 0.25rem 0.5rem;
+  border-radius: 1rem;
+}
+
+.complexity-high {
+  background-color: #ffcccc;
+  color: #5a0000;
+}
+
+.complexity-medium {
+  background-color: #fff0cc;
+  color: #5a3000;
+}
+
+.complexity-low {
+  background-color: #d4f5d4;
+  color: #005a00;
+}
+
+.top-skills-title {
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.top-skills-list {
+  margin-top: 0.5rem;
+}
+
+.skill-badge {
+  padding: 0.25rem 0.5rem;
+  border-radius: 1rem;
+  font-size: 0.75rem;
+}
+
+.skill-database {
+  background-color: #e5f0fa;
+  color: #0a6ed1;
+}
+
+.skill-frontend {
+  background-color: #ffeaf4;
+  color: #bb0057;
+}
+
+.skill-backend {
+  background-color: #ebf5ec;
+  color: #107e3e;
+}
+
+.skill-network {
+  background-color: #f5f0e5;
+  color: #8b6c00;
+}
+
+.skill-security {
+  background-color: #f9e8e8;
+  color: #ab0000;
+}
+
+.skill-devops {
+  background-color: #e5e9f0;
+  color: #354a5f;
+}
+
+.skill-integration {
+  background-color: #f0e5f5;
+  color: #6a097d;
+}
+
+.skill-analytics {
+  background-color: #e5f5f0;
+  color: #046c7a;
+}
+
+.skill-mobile {
+  background-color: #fff0e5;
+  color: #d14900;
+}
+
+.skill-cloud {
+  background-color: #e5f0fa;
+  color: #0a6ed1;
+}
+
+.skill-ux {
+  background-color: #f5e5f0;
+  color: #bb0057;
+}

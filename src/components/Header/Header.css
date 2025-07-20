@@ -1,0 +1,142 @@
+.header-workflow-indicator {
+  background-color: var(--sapBackgroundColor);
+  padding: 0.5rem 1rem;
+  border-bottom: 1px solid var(--sapList_BorderColor);
+}
+
+.workflow-stages {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.workflow-stage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  padding: 0.5rem;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  transition: transform 0.2s ease;
+}
+
+.workflow-stage:hover {
+  transform: translateY(-2px);
+}
+
+.workflow-stage:focus {
+  outline: 2px solid var(--sapContent_FocusColor);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.stage-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background-color: var(--sapList_Background);
+  border: 2px solid var(--sapList_BorderColor);
+  color: var(--sapContent_LabelColor);
+  font-weight: bold;
+  margin-bottom: 0.25rem;
+}
+
+.stage-label {
+  font-size: 0.75rem;
+  color: var(--sapContent_LabelColor);
+  text-align: center;
+}
+
+.workflow-connector {
+  flex-grow: 1;
+  height: 2px;
+  background-color: var(--sapList_BorderColor);
+  margin: 0 0.5rem;
+  position: relative;
+  top: -0.75rem;
+}
+
+/* Active stage styling */
+.workflow-stage.active .stage-icon {
+  background-color: var(--sapButton_Background);
+  border-color: var(--sapButton_BorderColor);
+  color: var(--sapButton_TextColor);
+}
+
+.workflow-stage.active + .workflow-connector {
+  background-color: var(--sapButton_Background);
+}
+
+/* Current stage styling */
+.workflow-stage.current .stage-icon {
+  background-color: var(--sapButton_Emphasized_Background);
+  border-color: var(--sapButton_Emphasized_BorderColor);
+  color: var(--sapButton_Emphasized_TextColor);
+  transform: scale(1.1);
+  box-shadow: var(--sapContent_Shadow1);
+}
+
+.workflow-stage.current .stage-label {
+  color: var(--sapButton_Emphasized_Background);
+  font-weight: bold;
+}
+
+/* Connection status container */
+.connection-status-container {
+  position: absolute;
+  top: 8px;
+  right: 200px;
+  z-index: 1000;
+  padding: 4px 8px;
+  border-radius: 4px;
+  background-color: rgba(255, 255, 255, 0.1);
+  transition: background-color 0.3s ease;
+}
+
+.connection-status-container:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .workflow-stages {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .workflow-stage {
+    margin: 0.25rem;
+  }
+  
+  .workflow-connector {
+    width: 20px;
+    flex-grow: 0;
+  }
+  
+  .connection-status-container {
+    position: static;
+    margin: 0.5rem auto;
+    text-align: center;
+    width: fit-content;
+  }
+}
+
+/* High contrast mode adjustments */
+@media (forced-colors: active) {
+  .workflow-stage.active .stage-icon,
+  .workflow-stage.current .stage-icon {
+    forced-color-adjust: none;
+    border: 2px solid CanvasText;
+  }
+  
+  .workflow-connector {
+    background-color: CanvasText;
+  }
+}

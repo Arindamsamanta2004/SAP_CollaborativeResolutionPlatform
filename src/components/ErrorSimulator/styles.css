@@ -1,0 +1,40 @@
+.error-simulator {
+  margin: 1rem 0;
+}
+
+.error-simulator-button {
+  margin-bottom: 1rem;
+}
+
+.error-simulator-dialog {
+  min-width: 600px;
+  max-width: 80%;
+}
+
+.error-simulator-content {
+  padding: 1rem;
+}
+
+.category-selector {
+  margin: 1rem 0;
+  width: 100%;
+}
+
+.error-options {
+  margin-top: 1rem;
+}
+
+.error-simulation-list {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.simulated-error-container {
+  margin: 1rem 0;
+}
+
+.validation-errors {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}

@@ -1,0 +1,234 @@
+.crp-dashboard {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.crp-dashboard-content {
+  padding: 1rem;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.crp-dashboard-info-strip {
+  margin-bottom: 1rem;
+}
+
+/* Collaboration Stats */
+.crp-collaboration-stats {
+  margin-bottom: 1.5rem;
+}
+
+.crp-stats-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.crp-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.crp-stat-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.crp-stat-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.crp-stat-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  color: white;
+}
+
+.crp-stat-icon.thread-icon {
+  background-color: #0854a0; /* SAP blue */
+}
+
+.crp-stat-icon.assigned-icon {
+  background-color: #e9730c; /* SAP orange */
+}
+
+.crp-stat-icon.resolved-icon {
+  background-color: #107e3e; /* SAP green */
+}
+
+.crp-stat-icon.engineer-icon {
+  background-color: #6a6d70; /* SAP grey */
+}
+
+.crp-stat-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.crp-stat-value {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.crp-stat-label {
+  font-size: 0.875rem;
+  color: #666;
+}
+
+.crp-dashboard-grid {
+  margin-top: 1rem;
+}
+
+.crp-section-header {
+  margin-bottom: 1rem;
+}
+
+.crp-thread-filters {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.crp-thread-filter {
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.crp-thread-filter:hover {
+  background-color: rgba(8, 84, 160, 0.1) !important;
+}
+
+.crp-collaboration-indicator {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background-color: rgba(8, 84, 160, 0.05);
+  border-radius: 16px;
+  color: #0854a0;
+}
+
+.crp-collaboration-icon {
+  color: #0854a0;
+}
+
+.crp-dashboard-section {
+  margin-bottom: 2rem;
+}
+
+.crp-dashboard-loading,
+.crp-dashboard-error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: 2rem;
+}
+
+.threads-section {
+  flex: 3;
+}
+
+.engineers-section {
+  flex: 1;
+}
+
+@media (max-width: 992px) {
+  .crp-stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .crp-dashboard-grid {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .crp-section-header {
+    flex-direction: column;
+    align-items: flex-start !important;
+    gap: 0.5rem;
+  }
+  
+  .crp-thread-filters {
+    width: 100%;
+    overflow-x: auto;
+    padding-bottom: 0.5rem;
+  }
+  
+  .crp-collaboration-indicator {
+    width: fit-content;
+  }
+}/
+* Workflow Indicator */
+.crp-workflow-indicator {
+  margin: 1.5rem 0;
+}
+
+/* Completion Dialog */
+.completion-dialog-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+  text-align: center;
+}
+
+.completion-icon-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background-color: #107e3e; /* SAP green */
+  margin-bottom: 1.5rem;
+}
+
+.completion-icon {
+  font-size: 3rem;
+  color: white;
+}
+
+.completion-stats {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin: 1.5rem 0;
+}
+
+.completion-stat-item {
+  text-align: center;
+}
+
+.completion-stat-value {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #0854a0; /* SAP blue */
+}
+
+.completion-stat-label {
+  font-size: 0.875rem;
+  color: #6a6d70; /* SAP grey */
+}
+
+.completion-actions {
+  margin-top: 2rem;
+}

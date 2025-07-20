@@ -1,0 +1,32 @@
+.breadcrumb-container {
+  padding: 0.5rem 1rem;
+  background-color: var(--sapBackgroundColor);
+  border-bottom: 1px solid var(--sapList_BorderColor);
+  margin-bottom: 1rem;
+}
+
+.breadcrumb-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.breadcrumb-icon {
+  font-size: 0.875rem;
+  color: var(--sapContent_IconColor);
+}
+
+.breadcrumb-link {
+  cursor: pointer;
+  color: var(--sapLinkColor);
+}
+
+.breadcrumb-link:hover {
+  text-decoration: underline;
+}
+
+.breadcrumb-current {
+  color: var(--sapTextColor);
+  font-weight: bold;
+  cursor: default;
+}

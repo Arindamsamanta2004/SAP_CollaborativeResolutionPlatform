@@ -1,0 +1,166 @@
+.demo-workflow-tester {
+  margin: 1rem 0;
+}
+
+.workflow-test-panel {
+  margin-bottom: 1rem;
+}
+
+.test-controls {
+  margin-bottom: 1.5rem;
+}
+
+.test-progress {
+  margin: 1rem 0;
+}
+
+.test-summary {
+  margin-top: 1rem;
+  padding: 0.75rem;
+  background-color: var(--sapList_Background);
+  border-radius: 0.25rem;
+  border: 1px solid var(--sapList_BorderColor);
+}
+
+.summary-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 1rem;
+}
+
+.summary-label {
+  font-size: 0.875rem;
+  color: var(--sapContent_LabelColor);
+}
+
+.summary-value {
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin-top: 0.25rem;
+}
+
+.summary-item.passed .summary-value {
+  color: var(--sapSuccessColor);
+}
+
+.summary-item.failed .summary-value {
+  color: var(--sapErrorColor);
+}
+
+.summary-item.pending .summary-value {
+  color: var(--sapInformationColor);
+}
+
+.test-message {
+  margin: 1rem 0;
+}
+
+.test-categories {
+  margin-top: 1.5rem;
+}
+
+.test-category-panel {
+  margin-bottom: 1rem;
+}
+
+.test-list {
+  margin-top: 0.5rem;
+  list-style-type: none;
+  padding: 0;
+}
+
+.test-item {
+  padding: 0.75rem;
+  border-bottom: 1px solid var(--sapList_BorderColor);
+}
+
+.test-item:last-child {
+  border-bottom: none;
+}
+
+.test-item-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.test-item-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.test-item-icon {
+  margin-right: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+}
+
+.test-item.passed .test-item-icon {
+  background-color: var(--sapSuccessBackground);
+}
+
+.test-item.failed .test-item-icon {
+  background-color: var(--sapErrorBackground);
+}
+
+.test-item.pending .test-item-icon {
+  background-color: var(--sapInformationBackground);
+}
+
+.passed-icon {
+  color: var(--sapSuccessColor);
+  font-weight: bold;
+}
+
+.failed-icon {
+  color: var(--sapErrorColor);
+  font-weight: bold;
+}
+
+.pending-icon {
+  color: var(--sapInformationColor);
+}
+
+.test-item-name {
+  flex: 1;
+  font-weight: bold;
+}
+
+.test-item-status {
+  padding: 0.25rem 0.5rem;
+  border-radius: 1rem;
+  font-size: 0.75rem;
+}
+
+.test-item-status.passed {
+  background-color: var(--sapSuccessBackground);
+  color: var(--sapSuccessColor);
+}
+
+.test-item-status.failed {
+  background-color: var(--sapErrorBackground);
+  color: var(--sapErrorColor);
+}
+
+.test-item-status.pending {
+  background-color: var(--sapInformationBackground);
+  color: var(--sapInformationColor);
+}
+
+.test-item-description {
+  color: var(--sapContent_LabelColor);
+  margin-bottom: 0.5rem;
+}
+
+.test-details {
+  font-size: 0.875rem;
+  color: var(--sapContent_LabelColor);
+  margin-top: 0.25rem;
+  padding-left: 2.25rem;
+  border-left: 3px solid var(--sapList_BorderColor);
+}

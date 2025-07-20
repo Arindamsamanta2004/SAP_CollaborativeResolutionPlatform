@@ -1,0 +1,84 @@
+.connection-status-panel {
+  margin-top: 16px;
+}
+
+.connection-status-header {
+  padding: 16px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.connection-status-indicator {
+  display: flex;
+  align-items: center;
+  padding: 4px 12px;
+  border-radius: 16px;
+  font-size: 0.875rem;
+}
+
+.connection-status-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 8px;
+}
+
+.connection-status-indicator.connected {
+  background-color: rgba(46, 204, 113, 0.1);
+  color: #2ecc71;
+}
+
+.connection-status-indicator.disconnected {
+  background-color: rgba(231, 76, 60, 0.1);
+  color: #e74c3c;
+}
+
+.connection-status-indicator.connected .connection-status-dot {
+  background-color: #2ecc71;
+  box-shadow: 0 0 6px rgba(46, 204, 113, 0.5);
+}
+
+.connection-status-indicator.disconnected .connection-status-dot {
+  background-color: #e74c3c;
+  box-shadow: 0 0 6px rgba(231, 76, 60, 0.5);
+}
+
+.connection-status-content {
+  padding: 16px;
+}
+
+.connection-status-info {
+  margin-bottom: 16px;
+}
+
+.connection-status-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.connection-status-icon {
+  margin-right: 12px;
+  color: #7f8c8d;
+}
+
+.connection-status-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.connection-status-label {
+  font-size: 0.75rem;
+  color: #7f8c8d;
+  margin-bottom: 2px;
+}
+
+.connection-status-value {
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.connection-status-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 16px;
+}

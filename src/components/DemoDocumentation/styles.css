@@ -1,0 +1,132 @@
+.demo-documentation {
+  padding: 1rem 0;
+}
+
+.doc-header {
+  margin-bottom: 1rem;
+}
+
+.doc-icon {
+  margin-right: 0.5rem;
+}
+
+.doc-info-strip {
+  margin-bottom: 1.5rem;
+}
+
+.doc-panel {
+  margin-bottom: 1rem;
+}
+
+.doc-section-title {
+  margin: 1.5rem 0 1rem;
+  color: var(--sapPrimary6);
+  border-bottom: 1px solid var(--sapList_BorderColor);
+  padding-bottom: 0.5rem;
+}
+
+.doc-subsection-title {
+  margin: 1.25rem 0 0.75rem;
+  color: var(--sapPrimary7);
+}
+
+.doc-text {
+  margin: 0.5rem 0;
+  line-height: 1.5;
+}
+
+.doc-spacer {
+  height: 1rem;
+}
+
+.doc-list {
+  margin: 1rem 0;
+}
+
+.doc-list .ui5-list-item {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem;
+  border-bottom: 1px solid var(--sapList_BorderColor);
+}
+
+.doc-list .ui5-list-item:last-child {
+  border-bottom: none;
+}
+
+.doc-list .ui5-list-item span {
+  margin-left: 0.5rem;
+}
+
+.doc-checklist {
+  margin: 1rem 0;
+}
+
+.doc-checklist .ui5-list-item {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem;
+  border-bottom: 1px solid var(--sapList_BorderColor);
+}
+
+.doc-checklist .ui5-list-item:last-child {
+  border-bottom: none;
+}
+
+.doc-checklist .ui5-list-item span {
+  margin-left: 0.5rem;
+}
+
+.scenario-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.scenario-card {
+  border: 1px solid var(--sapList_BorderColor);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  background-color: var(--sapList_Background);
+}
+
+.scenario-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.scenario-header h3 {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.complexity-badge {
+  padding: 0.25rem 0.5rem;
+  border-radius: 1rem;
+  font-size: 0.75rem;
+  font-weight: bold;
+}
+
+.high-complexity .complexity-badge {
+  background-color: #ffcccc;
+  color: #5a0000;
+}
+
+.medium-complexity .complexity-badge {
+  background-color: #fff0cc;
+  color: #5a3000;
+}
+
+.low-complexity .complexity-badge {
+  background-color: #d4f5d4;
+  color: #005a00;
+}
+
+.scenario-skills {
+  margin-top: 0.75rem;
+  font-style: italic;
+  color: var(--sapContent_LabelColor);
+}

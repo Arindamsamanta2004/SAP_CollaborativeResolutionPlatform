@@ -1,0 +1,91 @@
+.workflow-indicator {
+  margin: 1.5rem 0;
+  padding: 1rem;
+  background-color: var(--sapBackgroundColor);
+  border-radius: 0.5rem;
+  box-shadow: var(--sapContent_Shadow0);
+}
+
+.workflow-stages {
+  position: relative;
+  width: 100%;
+  padding: 0 1rem;
+}
+
+.workflow-stage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  width: 25%;
+  text-align: center;
+  color: var(--sapContent_LabelColor);
+}
+
+.stage-icon-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  background-color: var(--sapList_Background);
+  border: 2px solid var(--sapList_BorderColor);
+  margin-bottom: 0.5rem;
+  z-index: 2;
+}
+
+.stage-icon {
+  font-size: 1.5rem;
+}
+
+.stage-connector {
+  position: absolute;
+  top: 50%;
+  left: 100%;
+  width: 100%;
+  height: 2px;
+  background-color: var(--sapList_BorderColor);
+  z-index: 1;
+}
+
+.stage-label {
+  font-weight: bold;
+  margin-bottom: 0.25rem;
+}
+
+.stage-description {
+  font-size: 0.75rem;
+  color: var(--sapContent_LabelColor);
+  max-width: 120px;
+}
+
+/* Active stage styling */
+.workflow-stage.active .stage-icon-container {
+  background-color: var(--sapButton_Background);
+  border-color: var(--sapButton_BorderColor);
+  color: var(--sapButton_TextColor);
+}
+
+.workflow-stage.active .stage-connector.active {
+  background-color: var(--sapButton_Background);
+}
+
+.workflow-stage.active .stage-label {
+  color: var(--sapTextColor);
+}
+
+/* Current stage styling */
+.workflow-stage.current .stage-icon-container {
+  background-color: var(--sapButton_Emphasized_Background);
+  border-color: var(--sapButton_Emphasized_BorderColor);
+  color: var(--sapButton_Emphasized_TextColor);
+  transform: scale(1.1);
+  box-shadow: var(--sapContent_Shadow1);
+}
+
+.workflow-stage.current .stage-label {
+  color: var(--sapButton_Emphasized_Background);
+  font-weight: bold;
+}

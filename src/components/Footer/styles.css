@@ -1,0 +1,18 @@
+.app-footer {
+  margin-top: auto;
+  border-top: var(--sapElement_BorderWidth) solid var(--sapList_BorderColor);
+}
+
+.footer-bar {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 1rem;
+  font-size: var(--sapFontHeader6Size);
+  color: var(--sapContent_NonInteractiveIconColor);
+  background-color: var(--sapContent_ForegroundColor);
+}
+
+.footer-bar img {
+  height: 24px;
+  margin-right: 0.5rem;
+}
