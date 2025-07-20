@@ -60,7 +60,13 @@ const CRPDetail: React.FC = () => {
         // In a real app, these would be API calls
         if (id) {
           const ticketData = await getTicketById(id);
-          const threadData = await getThreadsByTicketId(id);
+          let threadData = await getThreadsByTicketId(id);
+          
+          // If no threads exist for this ticket, generate them dynamically
+          if (ticketData && threadData.length === 0) {
+            const { threadDecomposer } = await import('../../services/ai/threadDecomposer');
+            threadData = threadDecomposer.decomposeTicket(ticketData);
+          }
           
           if (ticketData) {
             setTicket(ticketData);

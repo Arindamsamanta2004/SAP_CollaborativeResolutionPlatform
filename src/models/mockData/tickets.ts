@@ -153,6 +153,34 @@ export const mockTickets: Ticket[] = [
     status: 'Classified',
     createdAt: new Date('2023-07-18T09:15:22'),
     updatedAt: new Date('2023-07-18T09:17:45')
+  },
+
+  // New complex ticket for testing multi-thread generation
+  {
+    id: 'TKT-2023-006',
+    subject: 'Complete system integration failure affecting multiple modules',
+    description: 'Our SAP S/4HANA system is experiencing widespread issues. The database is showing connection timeouts, the frontend interface is not loading properly, users cannot authenticate through the security system, and our cloud infrastructure is reporting network connectivity problems. The integration between modules has completely broken down, affecting our entire business process. This requires immediate attention from multiple specialist teams.',
+    urgency: 'Critical',
+    affectedSystem: 'SAP S/4HANA',
+    attachments: [
+      {
+        id: 'att-007',
+        name: 'system_errors.log',
+        type: 'text/plain',
+        size: 512000,
+        url: '/mock-files/system_errors.log'
+      }
+    ],
+    aiClassification: {
+      urgencyScore: 95,
+      complexityEstimate: 'High',
+      skillTags: ['Database', 'Frontend', 'Backend', 'Security', 'Network', 'Cloud', 'Integration'],
+      recommendedAction: 'CRP',
+      confidenceScore: 95
+    },
+    status: 'Classified',
+    createdAt: new Date('2023-07-19T10:30:00'),
+    updatedAt: new Date('2023-07-19T10:32:15')
   }
 ];
 

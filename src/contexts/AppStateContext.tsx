@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { Engineer, Ticket, IssueThread } from '../models/types';
+import { Engineer, Ticket, IssueThread, TicketStatus } from '../models/types';
 import { mockEngineers } from '../models/mockData/engineers';
 import { mockTickets } from '../models/mockData/tickets';
 import { WebSocketService } from '../services/websocket/WebSocketService';
@@ -54,14 +54,41 @@ export const AppStateProvider: React.FC<AppStateProviderProps> = ({ children }) 
       }
     }
 
-    // Default initial state - start with no resolved tickets for clean demo
+    // Default initial state - start with fresh unresolved threads but preserve auto-assignments
+    const resetThreads = mockTickets
+      .filter(ticket => ticket.threads)
+      .flatMap(ticket => ticket.threads || [])
+      .map(thread => {
+        // Preserve original auto-assignments from mock data but reset status and solutions
+        const hasAutoAssignment = thread.assignedEngineerId !== null;
+        
+        return {
+          ...thread,
+          status: hasAutoAssignment ? 'In Progress' as const : 'Open' as const,
+          assignedEngineerId: hasAutoAssignment ? thread.assignedEngineerId : null,
+          solution: undefined,
+          updatedAt: new Date()
+        };
+      });
+
+    const resetTickets = mockTickets.map(ticket => ({
+      ...ticket,
+      status: ticket.status === 'Resolved' ? 'Classified' as const : ticket.status,
+      resolvedAt: undefined,
+      updatedAt: new Date()
+    }));
+
+    const resetEngineers = mockEngineers.map(engineer => ({
+      ...engineer,
+      availability: 'Available' as const,
+      currentWorkload: Math.floor(Math.random() * 30) + 10 // Random initial workload 10-40%
+    }));
+
     return {
-      engineers: [...mockEngineers],
-      activeTickets: mockTickets.filter(ticket => ticket.status !== 'Resolved'),
+      engineers: resetEngineers,
+      activeTickets: resetTickets,
       resolvedTickets: [], // Start with no resolved tickets on first launch
-      activeThreads: mockTickets
-        .filter(ticket => ticket.threads)
-        .flatMap(ticket => ticket.threads || []),
+      activeThreads: resetThreads,
       lastActivity: new Date(),
       isConnected: false
     };
@@ -347,13 +374,43 @@ export const AppStateProvider: React.FC<AppStateProviderProps> = ({ children }) 
 
   // Refresh app state (useful after major changes or for demo reset)
   const refreshAppState = () => {
+    // Reset threads to initial state but preserve auto-assignments from mock data
+    const resetThreads = mockTickets
+      .filter(ticket => ticket.threads)
+      .flatMap(ticket => ticket.threads || [])
+      .map(thread => {
+        // Preserve original auto-assignments from mock data but reset status and solutions
+        const hasAutoAssignment = thread.assignedEngineerId !== null;
+        
+        return {
+          ...thread,
+          status: hasAutoAssignment ? 'In Progress' as const : 'Open' as const,
+          assignedEngineerId: hasAutoAssignment ? thread.assignedEngineerId : null,
+          solution: undefined,
+          updatedAt: new Date()
+        };
+      });
+
+    // Reset all tickets to initial unresolved state
+    const resetTickets = mockTickets.map(ticket => ({
+      ...ticket,
+      status: (ticket.status === 'Resolved' ? 'Classified' : ticket.status) as TicketStatus,
+      resolvedAt: undefined,
+      updatedAt: new Date()
+    }));
+
+    // Reset all engineers to initial availability state
+    const resetEngineers = mockEngineers.map(engineer => ({
+      ...engineer,
+      availability: 'Available' as const,
+      currentWorkload: Math.floor(Math.random() * 30) + 10 // Random initial workload 10-40%
+    }));
+
     setAppState({
-      engineers: [...mockEngineers],
-      activeTickets: mockTickets.filter(ticket => ticket.status !== 'Resolved'),
+      engineers: resetEngineers,
+      activeTickets: resetTickets,
       resolvedTickets: [], // Reset to no resolved tickets for clean demo restart
-      activeThreads: mockTickets
-        .filter(ticket => ticket.threads)
-        .flatMap(ticket => ticket.threads || []),
+      activeThreads: resetThreads,
       lastActivity: new Date(),
       isConnected
     });

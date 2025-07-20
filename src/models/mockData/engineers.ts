@@ -6,7 +6,7 @@ import { Engineer, AvailabilityStatus, SkillType } from '../types';
 export const mockEngineers: Engineer[] = [
   {
     id: 'eng-001',
-    name: 'Alex Weber',
+    name: 'Arindam Samanta',
     skills: ['Backend', 'Database', 'Cloud'],
     availability: 'Available',
     currentWorkload: 30,
@@ -14,32 +14,36 @@ export const mockEngineers: Engineer[] = [
       'Backend': 90,
       'Database': 85,
       'Cloud': 75,
-      'Integration': 60
+      'Integration': 60,
+      'DevOps': 50,
+      'Security': 45
     },
-    avatar: 'https://i.pravatar.cc/150?img=1',
-    email: 'alex.weber@example.com',
+    avatar: '/friends/Arindam Samanta.jpg',
+    email: 'arindam.samanta@sap.com',
     department: 'Enterprise Solutions',
     isLeadEngineer: true
   },
   {
     id: 'eng-002',
-    name: 'Sophia Chen',
+    name: 'A M Kamaneeya',
     skills: ['Frontend', 'Mobile', 'UX'],
-    availability: 'Busy',
-    currentWorkload: 70,
+    availability: 'Available',
+    currentWorkload: 20,
     expertise: {
       'Frontend': 95,
       'Mobile': 80,
       'UX': 85,
-      'Backend': 40
+      'Backend': 40,
+      'Integration': 55,
+      'Analytics': 50
     },
-    avatar: 'https://i.pravatar.cc/150?img=5',
-    email: 'sophia.chen@example.com',
+    avatar: '/friends/A M Kamaneeya.jpg',
+    email: 'kamaneeya.am@sap.com',
     department: 'User Experience'
   },
   {
     id: 'eng-003',
-    name: 'Marcus Johnson',
+    name: 'Ishrath Fathima',
     skills: ['Database', 'Analytics', 'Backend'],
     availability: 'Available',
     currentWorkload: 20,
@@ -47,15 +51,17 @@ export const mockEngineers: Engineer[] = [
       'Database': 95,
       'Analytics': 90,
       'Backend': 70,
-      'Cloud': 65
+      'Cloud': 65,
+      'Integration': 60,
+      'Security': 50
     },
-    avatar: 'https://i.pravatar.cc/150?img=3',
-    email: 'marcus.johnson@example.com',
+    avatar: '/friends/Ishrath Fathima.jpg',
+    email: 'ishrath.fathima@sap.com',
     department: 'Data Solutions'
   },
   {
     id: 'eng-004',
-    name: 'Elena Rodriguez',
+    name: 'Muqadasah',
     skills: ['Security', 'Network', 'Cloud'],
     availability: 'Available',
     currentWorkload: 40,
@@ -63,76 +69,50 @@ export const mockEngineers: Engineer[] = [
       'Security': 95,
       'Network': 85,
       'Cloud': 80,
-      'DevOps': 70
+      'DevOps': 70,
+      'Backend': 60,
+      'Integration': 55
     },
-    avatar: 'https://i.pravatar.cc/150?img=4',
-    email: 'elena.rodriguez@example.com',
+    avatar: '/friends/Muqadasah.jpg',
+    email: 'muqadasah@sap.com',
     department: 'Security & Infrastructure',
     isLeadEngineer: true
   },
   {
     id: 'eng-005',
-    name: 'David Kim',
+    name: 'S Dhamini',
     skills: ['DevOps', 'Cloud', 'Integration'],
-    availability: 'Busy',
-    currentWorkload: 80,
+    availability: 'Available',
+    currentWorkload: 30,
     expertise: {
       'DevOps': 90,
       'Cloud': 95,
       'Integration': 85,
-      'Network': 75
+      'Network': 75,
+      'Backend': 65,
+      'Security': 60
     },
-    avatar: 'https://i.pravatar.cc/150?img=7',
-    email: 'david.kim@example.com',
+    avatar: '/friends/S Dhamini.jpg',
+    email: 's.dhamini@sap.com',
     department: 'Cloud Operations'
   },
   {
     id: 'eng-006',
-    name: 'Priya Sharma',
+    name: 'Sayandeep Sinha',
     skills: ['Integration', 'Backend', 'Analytics'],
-    availability: 'Offline',
-    currentWorkload: 0,
+    availability: 'Available',
+    currentWorkload: 30,
     expertise: {
       'Integration': 95,
       'Backend': 80,
       'Analytics': 75,
-      'Database': 70
+      'Database': 70,
+      'Cloud': 65,
+      'DevOps': 55
     },
-    avatar: 'https://i.pravatar.cc/150?img=6',
-    email: 'priya.sharma@example.com',
+    avatar: '/friends/Sayandeep Sinha.jpg',
+    email: 'sayandeep.sinha@sap.com',
     department: 'Enterprise Solutions'
-  },
-  {
-    id: 'eng-007',
-    name: 'Thomas Mueller',
-    skills: ['Frontend', 'UX', 'Mobile'],
-    availability: 'Available',
-    currentWorkload: 50,
-    expertise: {
-      'Frontend': 90,
-      'UX': 95,
-      'Mobile': 85,
-      'Integration': 60
-    },
-    avatar: 'https://i.pravatar.cc/150?img=8',
-    email: 'thomas.mueller@example.com',
-    department: 'User Experience'
-  },
-  {
-    id: 'eng-008',
-    name: 'Sarah Johnson',
-    skills: ['Analytics', 'Database', 'Cloud'],
-    availability: 'Available',
-    currentWorkload: 30,
-    expertise: {
-      'Analytics': 95,
-      'Database': 85,
-      'Cloud': 70,
-      'Backend': 65
-    },
-    avatar: 'https://i.pravatar.cc/150?img=9',
-    email: 'sarah.johnson@example.com',
-    department: 'Data Solutions'
   }
 ];
 
@@ -170,9 +150,9 @@ export const findBestEngineerForSkill = (skill: SkillType): Engineer | null => {
   const availableEngineers = mockEngineers.filter(
     engineer => engineer.availability === 'Available' && engineer.skills.includes(skill)
   );
-  
+
   if (availableEngineers.length === 0) return null;
-  
+
   return availableEngineers.reduce((best, current) => {
     const bestExpertise = best.expertise[skill] || 0;
     const currentExpertise = current.expertise[skill] || 0;
@@ -187,17 +167,17 @@ export const findBestEngineerForSkill = (skill: SkillType): Engineer | null => {
  * @returns The updated engineer or undefined if not found
  */
 export const updateEngineerAvailability = (
-  engineerId: string, 
+  engineerId: string,
   availability: AvailabilityStatus
 ): Engineer | undefined => {
   const engineerIndex = mockEngineers.findIndex(eng => eng.id === engineerId);
   if (engineerIndex === -1) return undefined;
-  
+
   mockEngineers[engineerIndex] = {
     ...mockEngineers[engineerIndex],
     availability
   };
-  
+
   return mockEngineers[engineerIndex];
 };
 

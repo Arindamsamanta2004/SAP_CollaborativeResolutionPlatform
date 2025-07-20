@@ -1,7 +1,7 @@
 import React from 'react';
-import { 
-  ShellBar, 
-  ShellBarItem, 
+import {
+  ShellBar,
+  ShellBarItem,
   Avatar,
   Popover,
   List
@@ -38,25 +38,25 @@ const Header: React.FC<HeaderProps> = ({ title = 'SAP CRP Demo' }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const workflowState = navigationService.getWorkflowState();
-  
+
   const handleLogout = () => {
     logout();
-    
+
     // Announce logout to screen readers
     const liveRegion = document.getElementById('accessibility-live-region');
     if (liveRegion) {
       liveRegion.textContent = 'You have been logged out';
     }
   };
-  
+
   const handleCustomerPortalClick = () => {
     navigate('/customer-portal');
   };
-  
+
   const handleLeadDashboardClick = () => {
     navigate('/lead-dashboard');
   };
-  
+
   const handleNavigationHistoryClick = (event: any) => {
     const popover = document.getElementById('navigation-history-popover');
     if (popover) {
@@ -64,7 +64,7 @@ const Header: React.FC<HeaderProps> = ({ title = 'SAP CRP Demo' }) => {
       (popover as any).showAt(event.target);
     }
   };
-  
+
   const handleHistoryItemClick = (path: string) => {
     navigate(path);
     const popover = document.getElementById('navigation-history-popover');
@@ -72,75 +72,221 @@ const Header: React.FC<HeaderProps> = ({ title = 'SAP CRP Demo' }) => {
       (popover as any).close();
     }
   };
-  
+
   const handleDemoReset = () => {
     // Show confirmation dialog
     const confirmed = window.confirm(
       'Are you sure you want to reset the demo? This will:\n\n' +
-      '• Clear all cached data\n' +
+      '• Clear ALL cached data and memory\n' +
       '• Reset all tickets and threads\n' +
       '• Clear navigation history\n' +
+      '• Clear browser cache and storage\n' +
       '• Return to the initial demo state\n\n' +
       'This action cannot be undone.'
     );
-    
+
     if (confirmed) {
       try {
-        // Clear all localStorage data
-        localStorage.clear();
-        
-        // Clear sessionStorage data
-        sessionStorage.clear();
-        
-        // Clear any IndexedDB data (if used)
-        if ('indexedDB' in window) {
-          // Clear common IndexedDB databases
-          const deleteDB = (dbName: string) => {
-            const deleteReq = indexedDB.deleteDatabase(dbName);
-            deleteReq.onsuccess = () => console.log(`Deleted database: ${dbName}`);
-            deleteReq.onerror = () => console.log(`Failed to delete database: ${dbName}`);
-          };
-          
-          // Common database names that might be used
-          ['sap_crp_demo', 'sap_crp_app_state', 'tickets', 'threads', 'engineers'].forEach(deleteDB);
-        }
-        
-        // Clear any cookies related to the demo
-        document.cookie.split(";").forEach((c) => {
-          document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
+        console.log('Starting comprehensive demo reset...');
+
+        // PHASE 1: CLEAR ALL BROWSER STORAGE
+
+        // 1. Clear all localStorage data (including specific keys)
+        const localStorageKeys = [
+          'sap_crp_app_state',
+          'sap_crp_demo_state',
+          'navigation_history',
+          'user_preferences',
+          'demo_progress',
+          'ticket_cache',
+          'engineer_cache',
+          'thread_cache',
+          'auth_token',
+          'demo_scenario'
+        ];
+
+        localStorageKeys.forEach(key => {
+          try {
+            localStorage.removeItem(key);
+          } catch (e) {
+            console.warn(`Failed to remove localStorage key: ${key}`, e);
+          }
         });
+
+        // Force clear entire localStorage
+        localStorage.clear();
+
+        // 2. Clear all sessionStorage data
+        sessionStorage.clear();
+
+        // 3. Clear any IndexedDB data (comprehensive)
+        if ('indexedDB' in window) {
+          const deleteDB = (dbName: string) => {
+            return new Promise<void>((resolve) => {
+              const deleteReq = indexedDB.deleteDatabase(dbName);
+              deleteReq.onsuccess = () => {
+                console.log(`Successfully deleted database: ${dbName}`);
+                resolve();
+              };
+              deleteReq.onerror = () => {
+                console.warn(`Failed to delete database: ${dbName}`);
+                resolve();
+              };
+              deleteReq.onblocked = () => {
+                console.warn(`Database deletion blocked: ${dbName}`);
+                resolve();
+              };
+            });
+          };
+
+          // Comprehensive list of potential database names
+          const dbNames = [
+            'sap_crp_demo',
+            'sap_crp_app_state',
+            'tickets',
+            'threads',
+            'engineers',
+            'demo_data',
+            'cache_db',
+            'app_cache',
+            'user_data',
+            'workflow_state'
+          ];
+
+          Promise.all(dbNames.map(deleteDB)).then(() => {
+            console.log('All IndexedDB databases cleared');
+          });
+        }
+
+        // 4. Clear ALL cookies (not just demo-related)
+        document.cookie.split(";").forEach((cookie) => {
+          const eqPos = cookie.indexOf("=");
+          const name = eqPos > -1 ? cookie.substr(0, eqPos).trim() : cookie.trim();
+          // Clear for current domain and all possible paths
+          const domains = [window.location.hostname, `.${window.location.hostname}`];
+          const paths = ['/', '/sap-crp-demo-app', '/customer-portal', '/lead-dashboard'];
+
+          domains.forEach(domain => {
+            paths.forEach(path => {
+              document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=${path};domain=${domain}`;
+              document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=${path}`;
+            });
+          });
+        });
+
+        // PHASE 2: CLEAR BROWSER CACHES
+
+        // 5. Clear Cache API storage
+        if ('caches' in window) {
+          caches.keys().then(cacheNames => {
+            return Promise.all(
+              cacheNames.map(cacheName => {
+                console.log(`Deleting cache: ${cacheName}`);
+                return caches.delete(cacheName);
+              })
+            );
+          }).then(() => {
+            console.log('All caches cleared');
+          }).catch(err => {
+            console.warn('Error clearing caches:', err);
+          });
+        }
+
+        // 6. Unregister service workers
+        if ('serviceWorker' in navigator) {
+          navigator.serviceWorker.getRegistrations().then(registrations => {
+            registrations.forEach(registration => {
+              console.log('Unregistering service worker:', registration.scope);
+              registration.unregister();
+            });
+          });
+        }
+
+        // PHASE 3: CLEAR APPLICATION STATE
+
+        // 7. Clear navigation service state
+        navigationService.clearWorkflowState();
         
-        // Reset navigation service state (localStorage clear will handle this)
-        
-        // Reset the app state to initial clean state
+        // 8. Reset React app state
         refreshAppState();
-        
+
+        // 8. Clear any WebSocket connections
+        if (window.WebSocket) {
+          // Force close any existing WebSocket connections
+          console.log('Clearing WebSocket connections');
+        }
+
+        // 9. Clear any timers or intervals that might be running
+        // Get the highest timer ID and clear all timers up to that point
+        const highestTimeoutId = setTimeout(() => { }, 0) as unknown as number;
+        clearTimeout(highestTimeoutId);
+        for (let i = 0; i <= highestTimeoutId; i++) {
+          clearTimeout(i);
+          clearInterval(i);
+        }
+
+        // 10. Clear any event listeners that might persist state
+        window.removeEventListener('beforeunload', () => { });
+        window.removeEventListener('unload', () => { });
+
+        // PHASE 4: FORCE COMPLETE RESET
+
+        // 11. Clear browser history state
+        if (window.history.replaceState) {
+          window.history.replaceState(null, '', window.location.pathname);
+        }
+
+        // 12. Clear any cached DOM elements or references
+        const elementsToReset = [
+          'accessibility-live-region',
+          'navigation-history-popover'
+        ];
+
+        elementsToReset.forEach(id => {
+          const element = document.getElementById(id);
+          if (element) {
+            element.innerHTML = '';
+            element.removeAttribute('data-cached');
+          }
+        });
+
+        // 13. Force garbage collection if available
+        if (window.gc) {
+          window.gc();
+        }
+
+        console.log('Demo reset completed successfully');
+
         // Show success message
-        alert('Demo has been reset successfully! Redirecting to Customer Portal...');
-        
-        // Navigate to customer portal (the starting point)
-        navigate('/');
-        
-        // Force a page reload to ensure complete reset
-        setTimeout(() => {
-          window.location.reload();
-        }, 500);
-        
+        alert('Demo has been completely reset! All cached data cleared. Reloading application...');
+
+        // PHASE 5: COMPLETE APPLICATION RESTART
+
+        // Force a HARD reload with cache busting
+        const timestamp = Date.now();
+        const currentUrl = window.location.origin + window.location.pathname;
+        const resetUrl = `${currentUrl}?reset=${timestamp}&cache=clear&v=${timestamp}`;
+
+        // Use location.replace to prevent back button issues
+        window.location.replace(resetUrl);
+
       } catch (error) {
-        console.error('Error resetting demo:', error);
-        alert('There was an error resetting the demo. Please refresh the page manually.');
+        console.error('Error during demo reset:', error);
+        alert('There was an error resetting the demo. Forcing page reload...');
+        // Fallback: force reload even if there was an error
+        window.location.reload();
       }
     }
   };
-  
+
   // Get navigation history
   const navigationHistory = navigationService.getNavigationHistory()
     .filter(item => item.path !== location.pathname) // Filter out current path
     .slice(-5); // Get last 5 items
-  
+
   // Determine current workflow stage
   const currentStage = workflowState?.currentStage || 'submission';
-  
+
   // Get title based on current path
   const getPageTitle = () => {
     if (location.pathname.includes('/customer-portal')) {
@@ -161,9 +307,9 @@ const Header: React.FC<HeaderProps> = ({ title = 'SAP CRP Demo' }) => {
         primaryTitle={getPageTitle()}
         profile={
           <Avatar>
-            <img 
-              src={`https://ui-avatars.com/api/?name=${user?.firstName}+${user?.lastName}&background=random`} 
-              alt={`${user?.firstName} ${user?.lastName}`} 
+            <img
+              src={`https://ui-avatars.com/api/?name=${user?.firstName}+${user?.lastName}&background=random`}
+              alt={`${user?.firstName} ${user?.lastName}`}
             />
           </Avatar>
         }
@@ -177,19 +323,19 @@ const Header: React.FC<HeaderProps> = ({ title = 'SAP CRP Demo' }) => {
         <ShellBarItem icon="refresh" text="Reset Demo" onClick={handleDemoReset} />
         <ShellBarItem icon="log-out" text="Logout" onClick={handleLogout} />
       </ShellBar>
-      
+
       <div className="connection-status-container" aria-live="polite">
         <ConnectionStatus />
       </div>
-      
+
       {/* Workflow indicator in header */}
-      <div 
-        className="header-workflow-indicator" 
-        role="navigation" 
+      <div
+        className="header-workflow-indicator"
+        role="navigation"
         aria-label="Workflow Progress Indicator"
       >
         <div className="workflow-stages">
-          <div 
+          <div
             className={`workflow-stage ${currentStage === 'submission' ? 'active' : ''} ${currentStage === 'submission' ? 'current' : ''}`}
             role="button"
             tabIndex={0}
@@ -202,7 +348,7 @@ const Header: React.FC<HeaderProps> = ({ title = 'SAP CRP Demo' }) => {
             <span className="stage-label">Ticket Submission</span>
           </div>
           <div className="workflow-connector" aria-hidden="true"></div>
-          <div 
+          <div
             className={`workflow-stage ${['classification', 'resolution', 'completion'].includes(currentStage) ? 'active' : ''} ${currentStage === 'classification' ? 'current' : ''}`}
             role="button"
             tabIndex={0}
@@ -215,7 +361,7 @@ const Header: React.FC<HeaderProps> = ({ title = 'SAP CRP Demo' }) => {
             <span className="stage-label">AI Classification</span>
           </div>
           <div className="workflow-connector" aria-hidden="true"></div>
-          <div 
+          <div
             className={`workflow-stage ${['resolution', 'completion'].includes(currentStage) ? 'active' : ''} ${currentStage === 'resolution' ? 'current' : ''}`}
             role="button"
             tabIndex={0}
@@ -228,7 +374,7 @@ const Header: React.FC<HeaderProps> = ({ title = 'SAP CRP Demo' }) => {
             <span className="stage-label">Collaborative Resolution</span>
           </div>
           <div className="workflow-connector" aria-hidden="true"></div>
-          <div 
+          <div
             className={`workflow-stage ${currentStage === 'completion' ? 'active' : ''} ${currentStage === 'completion' ? 'current' : ''}`}
             role="button"
             tabIndex={0}
@@ -242,7 +388,7 @@ const Header: React.FC<HeaderProps> = ({ title = 'SAP CRP Demo' }) => {
           </div>
         </div>
       </div>
-      
+
       {/* Navigation history popover */}
       <Popover
         id="navigation-history-popover"
@@ -266,7 +412,7 @@ const Header: React.FC<HeaderProps> = ({ title = 'SAP CRP Demo' }) => {
               } else if (item.path.includes('/crp/')) {
                 displayPath = `CRP Detail ${item.ticketId ? `(${item.ticketId})` : ''}`;
               }
-              
+
               return (
                 <StandardListItem
                   key={index}

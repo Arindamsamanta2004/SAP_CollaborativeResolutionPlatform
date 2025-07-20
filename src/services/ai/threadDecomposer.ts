@@ -1,5 +1,6 @@
 import { Ticket, IssueThread, SkillType } from '../../models/types';
 import { complexityAnalyzer } from './complexityAnalyzer';
+import { skillMapper } from './skillMapper';
 import { generateThreadId } from '../../utils/dataUtils';
 
 /**
@@ -13,30 +14,41 @@ export const threadDecomposer = {
    * @returns Array of issue threads
    */
   decomposeTicket: (ticket: Ticket): IssueThread[] => {
-    // Get required skills with confidence scores
-    const skillScores = complexityAnalyzer.identifyRequiredSkills(ticket);
-    
-    // Only use skills with confidence > 40%
-    const significantSkills = skillScores.filter(item => item.confidence > 40);
-    
-    // If no significant skills, use the top 2 skills
-    const skillsToUse = significantSkills.length > 0 
-      ? significantSkills 
-      : skillScores.slice(0, 2);
-    
+    // For demo purposes, if the ticket already has skillTags in aiClassification, use those directly
+    let skillsToUse: Array<{ skill: SkillType; confidence: number }> = [];
+
+    if (ticket.aiClassification?.skillTags && ticket.aiClassification.skillTags.length > 0) {
+      // Use the pre-classified skills from the ticket
+      skillsToUse = ticket.aiClassification.skillTags.map((skill, index) => ({
+        skill: skill as SkillType,
+        confidence: 80 - (index * 5) // Decreasing confidence for each skill
+      }));
+    } else {
+      // Fallback to dynamic skill detection
+      const skillScores = complexityAnalyzer.identifyRequiredSkills(ticket);
+
+      // Only use skills with confidence > 30% (lowered threshold for more threads)
+      const significantSkills = skillScores.filter(item => item.confidence > 30);
+
+      // If no significant skills, use the top 3 skills for complex tickets
+      skillsToUse = significantSkills.length > 0
+        ? significantSkills
+        : skillScores.slice(0, ticket.aiClassification?.complexityEstimate === 'High' ? 4 : 2);
+    }
+
     // Generate threads based on identified skills
     const threads: IssueThread[] = [];
     const now = new Date();
-    
+
     // Create thread templates based on skills and ticket content
     skillsToUse.forEach((skillItem, index) => {
       const { skill } = skillItem;
-      
+
       // Generate thread title and description based on skill and ticket content
       const { title, description } = generateThreadContent(ticket, skill);
-      
-      // Create the thread
-      const thread: IssueThread = {
+
+      // Auto-assign thread to best available engineer
+      const tempThread: IssueThread = {
         id: generateThreadId(ticket.id, index + 1),
         parentTicketId: ticket.id,
         title,
@@ -49,13 +61,22 @@ export const threadDecomposer = {
         createdAt: now,
         updatedAt: now
       };
-      
+
+      const bestEngineer = skillMapper.findBestEngineerForThread(tempThread);
+
+      // Create the thread with auto-assignment
+      const thread: IssueThread = {
+        ...tempThread,
+        assignedEngineerId: bestEngineer?.id || null,
+        status: bestEngineer ? 'In Progress' : 'Open'
+      };
+
       threads.push(thread);
     });
-    
+
     // For complex tickets, add an integration thread if multiple skills are involved
     if (threads.length > 1 && ticket.aiClassification?.complexityEstimate === 'High') {
-      const integrationThread: IssueThread = {
+      const tempIntegrationThread: IssueThread = {
         id: generateThreadId(ticket.id, threads.length + 1),
         parentTicketId: ticket.id,
         title: `Integration and system-wide verification for ${ticket.subject}`,
@@ -68,10 +89,19 @@ export const threadDecomposer = {
         createdAt: now,
         updatedAt: now
       };
-      
+
+      // Auto-assign integration thread to best available engineer
+      const bestIntegrationEngineer = skillMapper.findBestEngineerForThread(tempIntegrationThread);
+
+      const integrationThread: IssueThread = {
+        ...tempIntegrationThread,
+        assignedEngineerId: bestIntegrationEngineer?.id || null,
+        status: bestIntegrationEngineer ? 'In Progress' : 'Open'
+      };
+
       threads.push(integrationThread);
     }
-    
+
     return threads;
   }
 };
@@ -85,7 +115,7 @@ export const threadDecomposer = {
 const generateThreadContent = (ticket: Ticket, skill: SkillType): { title: string; description: string } => {
   const subject = ticket.subject;
   const description = ticket.description;
-  
+
   // Templates for different skills
   const templates: Record<SkillType, { title: string; description: string }> = {
     'Database': {
@@ -133,18 +163,18 @@ const generateThreadContent = (ticket: Ticket, skill: SkillType): { title: strin
       description: `Evaluate user experience aspects of the issue. Check workflow design, usability patterns, accessibility compliance, and user journey mapping. Verify consistency with design guidelines and user expectations.`
     }
   };
-  
+
   // Get the template for the skill
   const template = templates[skill];
-  
+
   // Extract relevant parts of the ticket description based on skill
   const relevantContent = extractRelevantContent(description, skill);
-  
+
   // Combine template with relevant content if available
   return {
     title: template.title,
-    description: relevantContent 
-      ? `${template.description}\n\nRelevant information from ticket: ${relevantContent}` 
+    description: relevantContent
+      ? `${template.description}\n\nRelevant information from ticket: ${relevantContent}`
       : template.description
   };
 };
@@ -169,19 +199,19 @@ const extractRelevantContent = (description: string, skill: SkillType): string |
     'Cloud': ['cloud', 'aws', 'azure', 'saas', 'infrastructure'],
     'UX': ['user experience', 'ux', 'usability', 'design', 'workflow']
   };
-  
+
   // Get keywords for the skill
   const keywords = skillKeywords[skill] || [];
-  
+
   // Split description into sentences
   const sentences = description.split(/[.!?]+/).filter(s => s.trim().length > 0);
-  
+
   // Find sentences containing skill keywords
   const relevantSentences = sentences.filter(sentence => {
     const lowerSentence = sentence.toLowerCase();
     return keywords.some(keyword => lowerSentence.includes(keyword));
   });
-  
+
   // Return relevant sentences or null if none found
   return relevantSentences.length > 0 ? relevantSentences.join('. ') + '.' : null;
 };
@@ -202,16 +232,16 @@ const calculatePriority = (ticket: Ticket, skill: SkillType, index: number): num
     case 'Medium': priority = 6; break;
     case 'Low': priority = 4; break;
   }
-  
+
   // Adjust based on skill (security and database issues often need priority)
   if (skill === 'Security') {
     priority = Math.min(10, priority + 2);
   } else if (skill === 'Database') {
     priority = Math.min(10, priority + 1);
   }
-  
+
   // Adjust based on position (first identified skill might be more relevant)
   priority = Math.max(1, Math.min(10, priority - (index * 0.5)));
-  
+
   return Math.round(priority);
 };

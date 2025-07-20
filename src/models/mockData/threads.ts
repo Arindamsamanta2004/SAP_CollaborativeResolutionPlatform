@@ -11,10 +11,11 @@ export const mockThreads: IssueThread[] = [
     title: 'Database connection timeout investigation',
     description: 'Investigate the database connection timeouts shown in the logs. Check connection pooling, database server load, and network connectivity between application and database servers.',
     requiredSkills: ['Database'],
-    assignedEngineerId: 'eng-003',
-    status: 'In Progress',
+    assignedEngineerId: 'eng-003', // Ishrath Fathima - Database expert
+    status: 'Resolved',
     priority: 10,
     chatEnabled: true,
+    solution: 'Fixed database connection pool configuration and optimized query performance',
     createdAt: new Date('2023-07-15T09:26:00'),
     updatedAt: new Date('2023-07-15T10:15:22')
   },
@@ -24,10 +25,11 @@ export const mockThreads: IssueThread[] = [
     title: 'Email service configuration check',
     description: 'Verify the email service configuration and connectivity. Check SMTP settings, email templates, and service availability.',
     requiredSkills: ['Backend', 'Integration'],
-    assignedEngineerId: null,
-    status: 'Open',
+    assignedEngineerId: 'eng-006', // Sayandeep Sinha - Integration expert
+    status: 'Resolved',
     priority: 8,
     chatEnabled: true,
+    solution: 'Updated SMTP server settings and resolved authentication issues',
     createdAt: new Date('2023-07-15T09:26:00'),
     updatedAt: new Date('2023-07-15T09:26:00')
   },
@@ -37,10 +39,11 @@ export const mockThreads: IssueThread[] = [
     title: 'Purchase order approval workflow validation',
     description: 'Validate the purchase order approval workflow configuration and check for any broken steps in the process that might be affecting email notifications.',
     requiredSkills: ['Backend'],
-    assignedEngineerId: 'eng-001',
-    status: 'In Progress',
+    assignedEngineerId: 'eng-001', // Arindam Samanta - Backend expert
+    status: 'Resolved',
     priority: 7,
     chatEnabled: true,
+    solution: 'Restored workflow notifications and tested end-to-end functionality',
     createdAt: new Date('2023-07-15T09:26:00'),
     updatedAt: new Date('2023-07-15T11:05:45')
   },
@@ -52,7 +55,7 @@ export const mockThreads: IssueThread[] = [
     title: 'Security log analysis and threat identification',
     description: 'Analyze security logs to identify patterns of unauthorized access attempts. Map IP addresses and timestamps to determine attack vectors.',
     requiredSkills: ['Security'],
-    assignedEngineerId: 'eng-004',
+    assignedEngineerId: 'eng-004', // Muqadasah - Security expert
     status: 'In Progress',
     priority: 10,
     chatEnabled: true,
@@ -65,7 +68,7 @@ export const mockThreads: IssueThread[] = [
     title: 'Network traffic analysis and firewall configuration',
     description: 'Review network traffic patterns and firewall configurations. Check for any unauthorized open ports or misconfigured access rules.',
     requiredSkills: ['Network', 'Security'],
-    assignedEngineerId: null,
+    assignedEngineerId: 'eng-004', // Muqadasah - Network & Security expert
     status: 'Open',
     priority: 9,
     chatEnabled: true,
@@ -78,7 +81,7 @@ export const mockThreads: IssueThread[] = [
     title: 'User authentication system review',
     description: 'Review the user authentication system for vulnerabilities. Check password policies, MFA configuration, and session management.',
     requiredSkills: ['Security', 'Backend'],
-    assignedEngineerId: null,
+    assignedEngineerId: 'eng-001', // Arindam Samanta - Backend with Security knowledge
     status: 'Open',
     priority: 8,
     chatEnabled: true,
@@ -91,7 +94,7 @@ export const mockThreads: IssueThread[] = [
     title: 'Implement emergency access controls',
     description: 'Implement emergency access controls to prevent further unauthorized access while the investigation is ongoing.',
     requiredSkills: ['Security', 'DevOps'],
-    assignedEngineerId: null,
+    assignedEngineerId: 'eng-005', // S Dhamini - DevOps with Security knowledge
     status: 'Open',
     priority: 10,
     chatEnabled: true,
