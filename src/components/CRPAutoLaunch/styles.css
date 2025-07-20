@@ -1,0 +1,311 @@
+.crp-auto-launch-dialog {
+  --crp-primary-color: #0a6ed1;
+  --crp-success-color: #107e3e;
+  --crp-warning-color: #e9730c;
+  --crp-error-color: #bb0000;
+}
+
+.crp-launch-content {
+  padding: 1.5rem;
+  min-width: 600px;
+  max-width: 800px;
+}
+
+/* Launch Progress Styles */
+.crp-launch-progress {
+  text-align: center;
+}
+
+.crp-launch-header {
+  margin-bottom: 2rem;
+}
+
+.crp-launch-icon {
+  font-size: 3rem;
+  color: var(--crp-primary-color);
+  margin-bottom: 1rem;
+}
+
+.crp-launch-subtitle {
+  color: #6a6d70;
+  font-size: 0.875rem;
+}
+
+/* Ticket Summary Card */
+.crp-ticket-summary {
+  margin: 1.5rem 0;
+  padding: 1.5rem;
+  text-align: left;
+  border: 2px solid #e5f0fa;
+  background: #f8fbff;
+}
+
+.crp-ticket-description {
+  margin: 0.5rem 0 1rem 0;
+  color: #6a6d70;
+  line-height: 1.4;
+}
+
+.crp-ticket-metadata {
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.crp-required-skills {
+  margin-top: 1rem;
+}
+
+.crp-skills-label {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.crp-skills-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+/* Progress Section */
+.crp-progress-section {
+  margin: 2rem 0;
+}
+
+.crp-progress-bar {
+  margin-bottom: 1rem;
+}
+
+.crp-stage-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  margin: 1rem 0;
+}
+
+.crp-stage-pulse {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--crp-primary-color);
+  opacity: 0.6;
+}
+
+.crp-stage-pulse.active {
+  animation: crp-pulse 1.5s ease-in-out infinite;
+}
+
+.crp-current-stage {
+  font-weight: 500;
+  color: #354a5f;
+}
+
+/* Launch Animation */
+.crp-launch-animation {
+  margin: 2rem 0;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.crp-launch-rings {
+  position: relative;
+  width: 80px;
+  height: 80px;
+}
+
+.crp-ring {
+  position: absolute;
+  border: 2px solid var(--crp-primary-color);
+  border-radius: 50%;
+  opacity: 0;
+}
+
+.crp-launch-rings.active .crp-ring {
+  animation: crp-ring-expand 2s ease-out infinite;
+}
+
+.crp-ring-1 {
+  width: 40px;
+  height: 40px;
+  top: 20px;
+  left: 20px;
+  animation-delay: 0s;
+}
+
+.crp-ring-2 {
+  width: 60px;
+  height: 60px;
+  top: 10px;
+  left: 10px;
+  animation-delay: 0.5s;
+}
+
+.crp-ring-3 {
+  width: 80px;
+  height: 80px;
+  top: 0;
+  left: 0;
+  animation-delay: 1s;
+}
+
+/* Results Styles */
+.crp-launch-results {
+  text-align: center;
+}
+
+.crp-success-results {
+  text-align: left;
+}
+
+.crp-success-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.crp-success-icon {
+  font-size: 3rem;
+  color: var(--crp-success-color);
+  margin-bottom: 1rem;
+}
+
+.crp-success-reason {
+  color: #6a6d70;
+  font-style: italic;
+  margin-top: 0.5rem;
+}
+
+/* Lead Engineer Card */
+.crp-lead-engineer-card {
+  margin: 1.5rem 0;
+  padding: 1.5rem;
+  border: 2px solid #ebf5ec;
+  background: #f6fdf7;
+}
+
+.crp-engineer-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.crp-engineer-name {
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.crp-engineer-department {
+  color: #6a6d70;
+  font-size: 0.875rem;
+}
+
+/* Threads Summary */
+.crp-threads-summary {
+  margin: 1.5rem 0;
+  padding: 1.5rem;
+  border: 2px solid #e5f0fa;
+  background: #f8fbff;
+}
+
+.crp-threads-count {
+  color: #6a6d70;
+  margin-bottom: 1rem;
+}
+
+.crp-threads-preview {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.crp-thread-preview {
+  padding: 1rem;
+  background: white;
+  border-radius: 0.5rem;
+  border: 1px solid #e5e5e5;
+}
+
+.crp-thread-title {
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+.crp-thread-skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+}
+
+.crp-more-threads {
+  color: #6a6d70;
+  font-style: italic;
+  text-align: center;
+  margin-top: 0.5rem;
+}
+
+/* Action Buttons */
+.crp-action-buttons {
+  margin-top: 2rem;
+  gap: 1rem;
+}
+
+/* No Launch State */
+.crp-no-launch {
+  text-align: center;
+  padding: 2rem;
+}
+
+.crp-info-icon {
+  font-size: 3rem;
+  color: var(--crp-warning-color);
+  margin-bottom: 1rem;
+}
+
+/* Animations */
+@keyframes crp-pulse {
+  0%, 100% {
+    opacity: 0.6;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+}
+
+@keyframes crp-ring-expand {
+  0% {
+    opacity: 1;
+    transform: scale(0.5);
+  }
+  50% {
+    opacity: 0.7;
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.5);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .crp-launch-content {
+    min-width: auto;
+    padding: 1rem;
+  }
+  
+  .crp-ticket-metadata {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .crp-skills-tags {
+    justify-content: flex-start;
+  }
+  
+  .crp-action-buttons {
+    flex-direction: column;
+  }
+}

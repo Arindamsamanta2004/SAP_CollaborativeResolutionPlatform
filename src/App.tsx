@@ -19,11 +19,14 @@ import { setupSkipToMainContent } from './utils/accessibilityUtils';
 import './App.css';
 import './styles/accessibility.css';
 
+// Import UI5 illustrations
+import '@ui5/webcomponents-fiori/dist/illustrations/AllIllustrations.js';
+
 // Import pages
 import CustomerPortal from './pages/CustomerPortal';
 import LeadEngineerDashboard from './pages/LeadEngineerDashboard';
 import CRPDetail from './pages/CRPDetail';
-// import CRPList from './pages/CRPList';
+import CRPList from './pages/CRPList';
 // import CRPCreate from './pages/CRPCreate';
 // import Login from './pages/Login';
 
@@ -158,11 +161,9 @@ const AppContent: React.FC = () => {
                     </ErrorBoundary>
                   } />
                   <Route path="/" element={
-                    <ProtectedRoute element={
-                      <ErrorBoundary componentName="Lead Engineer Dashboard">
-                        <LeadEngineerDashboard />
-                      </ErrorBoundary>
-                    } />
+                    <ErrorBoundary componentName="Customer Portal">
+                      <CustomerPortal />
+                    </ErrorBoundary>
                   } />
                   <Route path="/lead-dashboard" element={
                     <ProtectedRoute element={
@@ -174,7 +175,7 @@ const AppContent: React.FC = () => {
                   <Route path="/crp" element={
                     <ProtectedRoute element={
                       <ErrorBoundary componentName="CRP List">
-                        <PlaceholderPage title="CRP List" />
+                        <CRPList />
                       </ErrorBoundary>
                     } />
                   } />

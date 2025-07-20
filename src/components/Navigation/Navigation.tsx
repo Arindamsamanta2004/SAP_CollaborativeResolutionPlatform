@@ -103,18 +103,6 @@ const Navigation: React.FC = () => {
         aria-label="Main Navigation"
       >
         <SideNavigationItem 
-          icon="manager-insight" 
-          text="Lead Engineer Dashboard" 
-          data-path="/"
-          selected={location.pathname === '/' || location.pathname === '/lead-dashboard'}
-          aria-current={location.pathname === '/' || location.pathname === '/lead-dashboard' ? 'page' : undefined}
-        >
-          {isWorkflowPath('/') && (
-            <Badge colorScheme="8" className="workflow-badge">Current Workflow</Badge>
-          )}
-        </SideNavigationItem>
-        
-        <SideNavigationItem 
           icon="customer" 
           text="Customer Portal" 
           data-path="/customer-portal"
@@ -122,6 +110,18 @@ const Navigation: React.FC = () => {
           aria-current={location.pathname === '/customer-portal' ? 'page' : undefined}
         >
           {isWorkflowPath('/customer-portal') && (
+            <Badge colorScheme="8" className="workflow-badge">Current Workflow</Badge>
+          )}
+        </SideNavigationItem>
+        
+        <SideNavigationItem 
+          icon="manager-insight" 
+          text="Lead Engineer Dashboard" 
+          data-path="/"
+          selected={location.pathname === '/' || location.pathname === '/lead-dashboard'}
+          aria-current={location.pathname === '/' || location.pathname === '/lead-dashboard' ? 'page' : undefined}
+        >
+          {isWorkflowPath('/') && (
             <Badge colorScheme="8" className="workflow-badge">Current Workflow</Badge>
           )}
         </SideNavigationItem>

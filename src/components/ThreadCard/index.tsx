@@ -193,11 +193,22 @@ const ThreadCard: React.FC<ThreadCardProps> = ({ thread }) => {
   
   // Handle mark as resolved action
   const handleMarkResolved = () => {
-    // Update thread status and add solution using our AppState context function
-    completeThread(thread.id, solution);
+    if (!solution.trim()) {
+      return; // Don't proceed if solution is empty
+    }
     
-    // Close dialog without page refresh (real-time updates will handle the UI)
-    setShowResolutionDialog(false);
+    try {
+      // Update thread status and add solution using our AppState context function
+      completeThread(thread.id, solution);
+      
+      // Reset solution and close dialog
+      setSolution('');
+      setShowResolutionDialog(false);
+      
+      console.log(`Thread ${thread.id} marked as resolved with solution: ${solution}`);
+    } catch (error) {
+      console.error('Error marking thread as resolved:', error);
+    }
   };
 
   // Handle opening chat dialog

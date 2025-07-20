@@ -1,0 +1,228 @@
+.customer-feedback-card {
+  margin-top: 1.5rem;
+}
+
+.feedback-content {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.resolution-complete-strip {
+  margin-bottom: 0.5rem;
+}
+
+/* Resolution Summary Section */
+.resolution-summary-section {
+  background-color: var(--sapInfobar_Background);
+  padding: 1rem;
+  border-radius: 0.5rem;
+  border-left: 4px solid var(--sapPositiveColor);
+}
+
+.resolution-summary-content {
+  margin-top: 0.5rem;
+  padding: 0.75rem;
+  background-color: white;
+  border-radius: 0.25rem;
+  border: 1px solid var(--sapGroup_ContentBorderColor);
+}
+
+/* Rating Section */
+.rating-section {
+  text-align: center;
+  padding: 1rem;
+  background-color: var(--sapGroup_ContentBackground);
+  border-radius: 0.5rem;
+  border: 1px solid var(--sapGroup_ContentBorderColor);
+}
+
+.rating-container {
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.rating-stars {
+  font-size: 2rem;
+}
+
+.rating-text-badge {
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
+  font-weight: 600;
+}
+
+/* Feedback Text Section */
+.feedback-text-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.feedback-textarea {
+  width: 100%;
+  resize: vertical;
+}
+
+.feedback-actions {
+  padding-top: 1rem;
+  border-top: 1px solid var(--sapGroup_ContentBorderColor);
+}
+
+/* Feedback Submitted State */
+.feedback-submitted {
+  text-align: center;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.feedback-submitted-icon {
+  margin-bottom: 1rem;
+}
+
+.success-icon {
+  font-size: 3rem;
+  color: var(--sapPositiveColor);
+  animation: successBounce 0.6s ease-out;
+}
+
+.submitted-rating-summary {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem;
+  background-color: var(--sapInfobar_Background);
+  border-radius: 0.5rem;
+  margin-top: 1rem;
+}
+
+.submitted-rating {
+  margin: 0 0.5rem;
+}
+
+.submitted-feedback-text {
+  margin-top: 1rem;
+  padding: 1rem;
+  background-color: var(--sapGroup_ContentBackground);
+  border-radius: 0.5rem;
+  border-left: 3px solid var(--sapInformationColor);
+  text-align: left;
+  max-width: 100%;
+}
+
+.feedback-label {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.feedback-text {
+  font-style: italic;
+  color: var(--sapContent_LabelColor);
+  line-height: 1.4;
+}
+
+/* Thank You Dialog */
+.thank-you-dialog {
+  --_ui5_dialog_width: 400px;
+}
+
+.thank-you-content {
+  padding: 2rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.thank-you-animation {
+  margin-bottom: 1rem;
+}
+
+.thank-you-icon {
+  font-size: 4rem;
+  color: var(--sapPositiveColor);
+  animation: thankYouPulse 1s ease-in-out;
+}
+
+.thank-you-stats {
+  display: flex;
+  gap: 2rem;
+  margin-top: 1.5rem;
+  justify-content: center;
+}
+
+.thank-you-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem;
+  background-color: var(--sapInfobar_Background);
+  border-radius: 0.5rem;
+  min-width: 100px;
+}
+
+.stat-icon {
+  font-size: 1.5rem;
+  color: var(--sapButton_Emphasized_Background);
+}
+
+/* Animations */
+@keyframes successBounce {
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes thankYouPulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .feedback-content {
+    padding: 1rem;
+    gap: 1rem;
+  }
+  
+  .rating-stars {
+    font-size: 1.5rem;
+  }
+  
+  .thank-you-stats {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .thank-you-stat {
+    min-width: auto;
+  }
+  
+  .submitted-rating-summary {
+    padding: 0.75rem;
+  }
+}

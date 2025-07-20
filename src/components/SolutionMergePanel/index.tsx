@@ -106,10 +106,7 @@ const SolutionMergePanel: React.FC<SolutionMergePanelProps> = ({
             // Notify parent component
             onResolutionComplete();
 
-            // Refresh the page after a short delay
-            setTimeout(() => {
-                window.location.reload();
-            }, 2000);
+            // Don't auto-reload the page - let the user control the workflow
         } catch (error) {
             console.error('Error completing resolution:', error);
             setError('Failed to complete the resolution process. Please try again.');

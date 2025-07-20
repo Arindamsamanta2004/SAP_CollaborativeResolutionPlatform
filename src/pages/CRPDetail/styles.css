@@ -176,8 +176,9 @@
   .crp-collaboration-indicator {
     width: fit-content;
   }
-}/
-* Workflow Indicator */
+}
+
+/* Workflow Indicator */
 .crp-workflow-indicator {
   margin: 1.5rem 0;
 }
@@ -231,4 +232,36 @@
 
 .completion-actions {
   margin-top: 2rem;
+}
+
+/* Resolution Submitted Card */
+.resolution-submitted-card {
+  margin: 1.5rem 0;
+  border: 2px solid #107e3e;
+  background-color: #f1f8f3;
+}
+
+.resolution-submitted-content {
+  padding: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.resolution-submitted-icon {
+  font-size: 3rem;
+  color: #107e3e;
+  flex-shrink: 0;
+}
+
+.resolution-submitted-text {
+  flex: 1;
+}
+
+@media (max-width: 480px) {
+  .resolution-submitted-content {
+    flex-direction: column;
+    text-align: center;
+    padding: 1.5rem;
+  }
 }

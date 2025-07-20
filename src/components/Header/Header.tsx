@@ -7,6 +7,7 @@ import {
   List
 } from '@ui5/webcomponents-react';
 import { useAuth } from '../../contexts/AuthContext';
+import { useAppState } from '../../contexts/AppStateContext';
 import { useNavigate, useLocation } from 'react-router-dom';
 import ConnectionStatus from '../ConnectionStatus';
 import { navigationService } from '../../services/navigation/navigationService';
@@ -33,6 +34,7 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ title = 'SAP CRP Demo' }) => {
   const { user, logout } = useAuth();
+  const { refreshAppState } = useAppState();
   const navigate = useNavigate();
   const location = useLocation();
   const workflowState = navigationService.getWorkflowState();
@@ -68,6 +70,66 @@ const Header: React.FC<HeaderProps> = ({ title = 'SAP CRP Demo' }) => {
     const popover = document.getElementById('navigation-history-popover');
     if (popover) {
       (popover as any).close();
+    }
+  };
+  
+  const handleDemoReset = () => {
+    // Show confirmation dialog
+    const confirmed = window.confirm(
+      'Are you sure you want to reset the demo? This will:\n\n' +
+      '• Clear all cached data\n' +
+      '• Reset all tickets and threads\n' +
+      '• Clear navigation history\n' +
+      '• Return to the initial demo state\n\n' +
+      'This action cannot be undone.'
+    );
+    
+    if (confirmed) {
+      try {
+        // Clear all localStorage data
+        localStorage.clear();
+        
+        // Clear sessionStorage data
+        sessionStorage.clear();
+        
+        // Clear any IndexedDB data (if used)
+        if ('indexedDB' in window) {
+          // Clear common IndexedDB databases
+          const deleteDB = (dbName: string) => {
+            const deleteReq = indexedDB.deleteDatabase(dbName);
+            deleteReq.onsuccess = () => console.log(`Deleted database: ${dbName}`);
+            deleteReq.onerror = () => console.log(`Failed to delete database: ${dbName}`);
+          };
+          
+          // Common database names that might be used
+          ['sap_crp_demo', 'sap_crp_app_state', 'tickets', 'threads', 'engineers'].forEach(deleteDB);
+        }
+        
+        // Clear any cookies related to the demo
+        document.cookie.split(";").forEach((c) => {
+          document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
+        });
+        
+        // Reset navigation service state (localStorage clear will handle this)
+        
+        // Reset the app state to initial clean state
+        refreshAppState();
+        
+        // Show success message
+        alert('Demo has been reset successfully! Redirecting to Customer Portal...');
+        
+        // Navigate to customer portal (the starting point)
+        navigate('/');
+        
+        // Force a page reload to ensure complete reset
+        setTimeout(() => {
+          window.location.reload();
+        }, 500);
+        
+      } catch (error) {
+        console.error('Error resetting demo:', error);
+        alert('There was an error resetting the demo. Please refresh the page manually.');
+      }
     }
   };
   
@@ -112,6 +174,7 @@ const Header: React.FC<HeaderProps> = ({ title = 'SAP CRP Demo' }) => {
         <ShellBarItem icon="customer" text="Customer Portal" onClick={handleCustomerPortalClick} />
         <ShellBarItem icon="manager-insight" text="Lead Dashboard" onClick={handleLeadDashboardClick} />
         <ShellBarItem icon="history" text="Navigation History" onClick={handleNavigationHistoryClick} />
+        <ShellBarItem icon="refresh" text="Reset Demo" onClick={handleDemoReset} />
         <ShellBarItem icon="log-out" text="Logout" onClick={handleLogout} />
       </ShellBar>
       

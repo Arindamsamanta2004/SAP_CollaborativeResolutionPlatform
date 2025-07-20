@@ -176,9 +176,40 @@ textarea.form-control {
   gap: 1rem;
 }
 
+/* Customer Resolution View */
+.customer-resolution-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.resolution-header {
+  padding: 1rem 0;
+  margin-bottom: 1rem;
+}
+
+.back-to-portal-button {
+  margin-bottom: 1rem;
+}
+
+.demo-resolution-button {
+  margin-right: 0.5rem;
+}
+
 /* Responsive adjustments */
 @media (max-width: 768px) {
   .customer-portal {
     padding: 1rem;
+  }
+  
+  .demo-tools {
+    position: static;
+    margin-top: 1rem;
+    justify-content: center;
+  }
+  
+  .demo-tools-container {
+    flex-wrap: wrap;
+    justify-content: center;
   }
 }

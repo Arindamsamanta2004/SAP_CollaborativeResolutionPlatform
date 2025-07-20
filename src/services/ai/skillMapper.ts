@@ -7,7 +7,7 @@ import { mockEngineers } from '../../models/mockData/engineers';
  */
 export const skillMapper = {
   /**
-   * Find the best lead engineer for a ticket based on skill dominance (70% rule)
+   * Find the best lead engineer for a ticket based on experience and expertise
    * @param ticket The classified ticket
    * @returns The best matching lead engineer or null if none found
    */
@@ -16,33 +16,40 @@ export const skillMapper = {
       return null;
     }
     
-    // Get lead engineers who are available
-    const availableLeads = mockEngineers.filter(
-      engineer => engineer.isLeadEngineer && engineer.availability === 'Available'
+    // Get all engineers who are available (not just leads)
+    const availableEngineers = mockEngineers.filter(
+      engineer => engineer.availability === 'Available'
     );
     
-    if (availableLeads.length === 0) {
+    if (availableEngineers.length === 0) {
       return null;
     }
     
-    // Calculate dominance score for each lead engineer
-    const leadsWithScores = availableLeads.map(lead => {
-      const dominanceResult = calculateSkillDominance(lead, ticket.aiClassification!.skillTags);
+    // Calculate experience score for each engineer
+    const engineersWithScores = availableEngineers.map(engineer => {
+      const experienceResult = calculateExperienceScore(engineer, ticket.aiClassification!.skillTags);
       
       return {
-        lead,
-        ...dominanceResult
+        engineer,
+        ...experienceResult
       };
     });
     
-    // Filter leads with at least 70% dominance in one skill
-    const qualifiedLeads = leadsWithScores.filter(item => item.dominanceScore >= 0.7);
+    // Sort by experience score (descending) and prefer lead engineers
+    engineersWithScores.sort((a, b) => {
+      // First priority: experience score
+      if (b.experienceScore !== a.experienceScore) {
+        return b.experienceScore - a.experienceScore;
+      }
+      // Second priority: prefer existing lead engineers
+      if (a.engineer.isLeadEngineer && !b.engineer.isLeadEngineer) return -1;
+      if (!a.engineer.isLeadEngineer && b.engineer.isLeadEngineer) return 1;
+      // Third priority: lower current workload
+      return a.engineer.currentWorkload - b.engineer.currentWorkload;
+    });
     
-    // Sort by dominance score (descending)
-    qualifiedLeads.sort((a, b) => b.dominanceScore - a.dominanceScore);
-    
-    // Return the best match or null if no qualified lead found
-    return qualifiedLeads.length > 0 ? qualifiedLeads[0].lead : null;
+    // Return the most experienced engineer
+    return engineersWithScores.length > 0 ? engineersWithScores[0].engineer : null;
   },
   
   /**
@@ -181,6 +188,52 @@ export const skillMapper = {
     
     return projectedWorkload;
   }
+};
+
+/**
+ * Calculate experience score for an engineer based on required skills
+ * @param engineer The engineer to evaluate
+ * @param requiredSkills The skills required for the task
+ * @returns Experience score, primary skill, and total expertise
+ */
+const calculateExperienceScore = (
+  engineer: Engineer, 
+  requiredSkills: SkillType[]
+): { experienceScore: number; primarySkill: SkillType | null; totalExpertise: number } => {
+  let primarySkill: SkillType | null = null;
+  let highestExpertise = 0;
+  let totalExpertise = 0;
+  let skillCount = 0;
+  
+  // Calculate total expertise and find primary skill
+  requiredSkills.forEach(skill => {
+    const expertiseLevel = engineer.expertise[skill] || 0;
+    if (expertiseLevel > 0) {
+      totalExpertise += expertiseLevel;
+      skillCount++;
+      
+      if (expertiseLevel > highestExpertise) {
+        highestExpertise = expertiseLevel;
+        primarySkill = skill;
+      }
+    }
+  });
+  
+  // Calculate experience score based on:
+  // 1. Average expertise across required skills (60%)
+  // 2. Skill coverage (how many required skills they have) (25%)
+  // 3. Lead engineer bonus (15%)
+  const averageExpertise = skillCount > 0 ? totalExpertise / skillCount : 0;
+  const skillCoverage = skillCount / requiredSkills.length;
+  const leadBonus = engineer.isLeadEngineer ? 20 : 0;
+  
+  const experienceScore = (averageExpertise * 0.6) + (skillCoverage * 100 * 0.25) + leadBonus;
+  
+  return {
+    experienceScore: Math.round(experienceScore),
+    primarySkill,
+    totalExpertise
+  };
 };
 
 /**

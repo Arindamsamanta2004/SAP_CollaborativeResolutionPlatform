@@ -1,0 +1,306 @@
+.ticket-success-dialog {
+  --_ui5_dialog_content_min_height: 400px;
+  --_ui5_dialog_width: 500px;
+}
+
+.ticket-success-content {
+  padding: 2rem;
+  text-align: center;
+  min-height: 350px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Success Progress View */
+.success-progress {
+  width: 100%;
+}
+
+.success-icon-container {
+  position: relative;
+  margin-bottom: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 120px;
+}
+
+.success-rings {
+  position: absolute;
+  width: 120px;
+  height: 120px;
+}
+
+.success-ring {
+  position: absolute;
+  border: 2px solid var(--sapPositiveColor);
+  border-radius: 50%;
+  opacity: 0.3;
+  animation: expandRing 2s infinite ease-out;
+}
+
+.success-ring-1 {
+  width: 60px;
+  height: 60px;
+  top: 30px;
+  left: 30px;
+  animation-delay: 0s;
+}
+
+.success-ring-2 {
+  width: 80px;
+  height: 80px;
+  top: 20px;
+  left: 20px;
+  animation-delay: 0.5s;
+}
+
+.success-ring-3 {
+  width: 100px;
+  height: 100px;
+  top: 10px;
+  left: 10px;
+  animation-delay: 1s;
+}
+
+.success-icon {
+  font-size: 3rem;
+  color: var(--sapPositiveColor);
+  z-index: 10;
+  position: relative;
+}
+
+.success-icon.pulsing {
+  animation: pulse 1.5s infinite ease-in-out;
+}
+
+.success-title {
+  color: var(--sapPositiveColor);
+  margin-bottom: 1rem;
+}
+
+.success-ticket-id {
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+  color: var(--sapContent_LabelColor);
+}
+
+.success-progress-section {
+  width: 100%;
+  margin-bottom: 2rem;
+}
+
+.success-progress-bar {
+  margin-bottom: 1rem;
+}
+
+.success-stage-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.success-stage-pulse {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--sapInformationColor);
+}
+
+.success-stage-pulse.active {
+  animation: stagePulse 1s infinite ease-in-out;
+}
+
+.success-current-stage {
+  color: var(--sapContent_LabelColor);
+  font-style: italic;
+}
+
+.success-message {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 1rem;
+  background-color: var(--sapInfobar_Background);
+  border-radius: 0.5rem;
+  margin-top: 1rem;
+}
+
+.engineer-icon {
+  color: var(--sapInformationColor);
+  font-size: 1.2rem;
+}
+
+.success-description {
+  font-weight: 600;
+  color: var(--sapContent_LabelColor);
+}
+
+/* Success Complete View */
+.success-complete {
+  width: 100%;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+.success-checkmark {
+  margin-bottom: 2rem;
+}
+
+.checkmark-icon {
+  font-size: 4rem;
+  color: var(--sapPositiveColor);
+  animation: checkmarkBounce 0.6s ease-out;
+}
+
+.complete-title {
+  color: var(--sapPositiveColor);
+  margin-bottom: 1rem;
+}
+
+.complete-message {
+  color: var(--sapContent_LabelColor);
+  margin-bottom: 2rem;
+}
+
+.success-actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.continue-button {
+  padding: 0.75rem 2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 0.5rem;
+  transition: all 0.2s ease-in-out;
+}
+
+.continue-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.redirect-animation {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.redirect-dots {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--sapInformationColor);
+  animation: dotBounce 1.4s infinite ease-in-out both;
+}
+
+.dot-1 {
+  animation-delay: -0.32s;
+}
+
+.dot-2 {
+  animation-delay: -0.16s;
+}
+
+.dot-3 {
+  animation-delay: 0s;
+}
+
+/* Animations */
+@keyframes expandRing {
+  0% {
+    transform: scale(0.8);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(1.2);
+    opacity: 0;
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+@keyframes stagePulse {
+  0%, 100% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes checkmarkBounce {
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes dotBounce {
+  0%, 80%, 100% {
+    transform: scale(0);
+  }
+  40% {
+    transform: scale(1);
+  }
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .ticket-success-dialog {
+    --_ui5_dialog_width: 90vw;
+  }
+  
+  .ticket-success-content {
+    padding: 1.5rem;
+  }
+  
+  .success-icon-container {
+    height: 100px;
+  }
+  
+  .success-rings {
+    width: 100px;
+    height: 100px;
+  }
+  
+  .success-icon {
+    font-size: 2.5rem;
+  }
+}

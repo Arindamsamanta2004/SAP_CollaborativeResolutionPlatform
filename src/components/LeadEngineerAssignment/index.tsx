@@ -54,45 +54,64 @@ const LeadEngineerAssignment: React.FC<LeadEngineerAssignmentProps> = ({ ticket 
         return;
       }
       
-      // Calculate dominance score for each lead engineer
-      const matches = availableLeads.map(lead => {
-        let dominanceScore = 0;
+      // Get all available engineers (not just leads) for experience-based assignment
+      const allAvailableEngineers = mockEngineers.filter(
+        engineer => engineer.availability === 'Available'
+      );
+
+      // Calculate experience score for each engineer
+      const matches = allAvailableEngineers.map(engineer => {
+        let experienceScore = 0;
         let primarySkill: string | null = null;
         let highestExpertise = 0;
+        let totalExpertise = 0;
+        let skillCount = 0;
         
-        // Find the lead's primary skill among the required skills
+        // Calculate total expertise and find primary skill
         ticket.aiClassification!.skillTags.forEach(skill => {
-          const expertiseLevel = lead.expertise[skill] || 0;
-          if (expertiseLevel > highestExpertise) {
-            highestExpertise = expertiseLevel;
-            primarySkill = skill;
+          const expertiseLevel = engineer.expertise[skill] || 0;
+          if (expertiseLevel > 0) {
+            totalExpertise += expertiseLevel;
+            skillCount++;
+            
+            if (expertiseLevel > highestExpertise) {
+              highestExpertise = expertiseLevel;
+              primarySkill = skill;
+            }
           }
         });
         
-        // Calculate dominance percentage (primary skill expertise vs. total expertise)
-        if (primarySkill) {
-          const totalExpertise = ticket.aiClassification!.skillTags.reduce(
-            (sum, skill) => sum + (lead.expertise[skill] || 0), 
-            0
-          );
-          
-          dominanceScore = totalExpertise > 0 
-            ? (lead.expertise[primarySkill] || 0) / totalExpertise 
-            : 0;
-        }
+        // Calculate experience score based on:
+        // 1. Average expertise across required skills (60%)
+        // 2. Skill coverage (how many required skills they have) (25%)
+        // 3. Lead engineer bonus (15%)
+        const averageExpertise = skillCount > 0 ? totalExpertise / skillCount : 0;
+        const skillCoverage = skillCount / ticket.aiClassification!.skillTags.length;
+        const leadBonus = engineer.isLeadEngineer ? 20 : 0;
+        
+        experienceScore = (averageExpertise * 0.6) + (skillCoverage * 100 * 0.25) + leadBonus;
         
         return {
-          engineer: lead,
-          dominanceScore,
+          engineer,
+          dominanceScore: experienceScore / 100, // Keep for compatibility
           primarySkill
         };
       });
       
-      // Filter leads with at least 70% dominance in one skill
-      const qualifiedMatches = matches.filter(item => item.dominanceScore >= 0.7);
+      // Filter engineers with some relevant experience
+      const qualifiedMatches = matches.filter(item => item.dominanceScore > 0);
       
-      // Sort by dominance score (descending)
-      qualifiedMatches.sort((a, b) => b.dominanceScore - a.dominanceScore);
+      // Sort by experience score (descending) and prefer lead engineers
+      qualifiedMatches.sort((a, b) => {
+        if (b.dominanceScore !== a.dominanceScore) {
+          return b.dominanceScore - a.dominanceScore;
+        }
+        // Prefer lead engineers
+        if (a.engineer.isLeadEngineer && !b.engineer.isLeadEngineer) return -1;
+        if (!a.engineer.isLeadEngineer && b.engineer.isLeadEngineer) return 1;
+        // Prefer lower workload
+        return a.engineer.currentWorkload - b.engineer.currentWorkload;
+      });
       
       setEngineerMatches(qualifiedMatches);
       setSelectedEngineer(qualifiedMatches.length > 0 ? qualifiedMatches[0].engineer : null);
@@ -107,7 +126,7 @@ const LeadEngineerAssignment: React.FC<LeadEngineerAssignmentProps> = ({ ticket 
       <Card className="lead-assignment-card">
         <CardHeader titleText="Lead Engineer Assignment" />
         <div className="lead-assignment-loading">
-          <Text>Analyzing skill dominance...</Text>
+          <Text>Finding most experienced engineer...</Text>
           <ProgressIndicator value={50} />
         </div>
       </Card>
@@ -119,7 +138,7 @@ const LeadEngineerAssignment: React.FC<LeadEngineerAssignmentProps> = ({ ticket 
       <Card className="lead-assignment-card">
         <CardHeader titleText="Lead Engineer Assignment" />
         <div className="lead-assignment-empty">
-          <Text>No qualified lead engineer found with 70% skill dominance.</Text>
+          <Text>No qualified engineers available with relevant experience.</Text>
         </div>
       </Card>
     );
@@ -149,14 +168,16 @@ const LeadEngineerAssignment: React.FC<LeadEngineerAssignmentProps> = ({ ticket 
         </div>
         
         {bestMatch && (
-          <div className="dominance-info">
+          <div className="experience-info">
             <Text>Primary Skill: <Badge className={`skill-badge skill-${bestMatch.primarySkill?.toLowerCase()}`}>{bestMatch.primarySkill}</Badge></Text>
-            <Text>Skill Dominance: {Math.round(bestMatch.dominanceScore * 100)}%</Text>
+            <Text>Experience Score: {Math.round(bestMatch.dominanceScore * 100)}%</Text>
             <ProgressIndicator 
               value={bestMatch.dominanceScore * 100} 
-              valueState={bestMatch.dominanceScore >= 0.7 ? "Positive" : "Critical"}
+              valueState="Positive"
             />
-            <Text className="dominance-rule">70% Rule: {bestMatch.dominanceScore >= 0.7 ? "✓ Qualified" : "✗ Not Qualified"}</Text>
+            <Text className="assignment-reason">
+              {selectedEngineer.isLeadEngineer ? "✓ Lead Engineer with Most Relevant Experience" : "✓ Most Experienced Available Engineer"}
+            </Text>
           </div>
         )}
         

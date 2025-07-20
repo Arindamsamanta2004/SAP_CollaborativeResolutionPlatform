@@ -248,3 +248,32 @@
 .testing-content {
   padding-bottom: 2rem;
 }
+
+/* Dashboard header actions */
+.dashboard-header-actions {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.crp-dashboard-button {
+  font-weight: 600;
+}
+
+.crp-dashboard-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(10, 110, 209, 0.3);
+}
+
+/* Responsive design for header actions */
+@media (max-width: 768px) {
+  .dashboard-header-actions {
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+  
+  .crp-dashboard-button {
+    font-size: 0.875rem;
+    padding: 0.5rem 1rem;
+  }
+}

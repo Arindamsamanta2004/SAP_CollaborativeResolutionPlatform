@@ -1,0 +1,350 @@
+.resolution-submission-dialog {
+  --_ui5_dialog_content_min_height: 60vh;
+  --_ui5_dialog_content_max_height: 80vh;
+  --_ui5_dialog_width: 700px;
+}
+
+.resolution-submission-content {
+  padding: 1.5rem;
+  max-height: 75vh;
+  overflow-y: auto;
+}
+
+/* Resolution Preparation View */
+.resolution-preparation {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.resolution-header {
+  text-align: center;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--sapGroup_ContentBorderColor);
+}
+
+.resolution-subtitle {
+  color: var(--sapContent_LabelColor);
+  margin-top: 0.5rem;
+}
+
+/* Ticket Summary Card */
+.ticket-summary-card {
+  margin-bottom: 1rem;
+}
+
+.ticket-summary-content {
+  padding: 1rem;
+}
+
+.summary-metadata {
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.ticket-description {
+  color: var(--sapContent_LabelColor);
+  line-height: 1.4;
+}
+
+/* Thread Solutions Card */
+.thread-solutions-card {
+  margin-bottom: 1rem;
+}
+
+.thread-solutions-content {
+  padding: 1rem;
+}
+
+.solutions-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.solution-item {
+  padding: 0.75rem;
+  background-color: var(--sapInfobar_Background);
+  border-radius: 0.25rem;
+  border-left: 3px solid var(--sapPositiveColor);
+}
+
+.solution-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.solution-icon {
+  color: var(--sapPositiveColor);
+  font-size: 1rem;
+}
+
+.solution-title {
+  font-weight: 600;
+}
+
+.solution-description {
+  color: var(--sapContent_LabelColor);
+  font-size: 0.875rem;
+  margin-left: 1.5rem;
+}
+
+/* Resolution Input Section */
+.resolution-input-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.resolution-input-header {
+  margin-bottom: 0.5rem;
+}
+
+.resolution-input-label {
+  font-weight: 600;
+}
+
+.resolution-textarea {
+  width: 100%;
+  min-height: 200px;
+  font-family: inherit;
+}
+
+.resolution-hint {
+  margin-top: 0.5rem;
+}
+
+.resolution-actions {
+  gap: 0.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--sapGroup_ContentBorderColor);
+}
+
+/* Submission Progress View */
+.resolution-submission-progress {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  text-align: center;
+}
+
+.submission-header {
+  margin-bottom: 2rem;
+}
+
+.submission-icon {
+  font-size: 3rem;
+  color: var(--sapInformationColor);
+  margin-bottom: 1rem;
+  animation: pulse 1.5s infinite ease-in-out;
+}
+
+.submission-subtitle {
+  color: var(--sapContent_LabelColor);
+  margin-top: 0.5rem;
+}
+
+.submission-progress-section {
+  width: 100%;
+  max-width: 400px;
+  margin-bottom: 2rem;
+}
+
+.submission-progress-bar {
+  margin-bottom: 1rem;
+}
+
+.submission-stage-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.submission-stage-pulse {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--sapInformationColor);
+}
+
+.submission-stage-pulse.active {
+  animation: stagePulse 1s infinite ease-in-out;
+}
+
+.submission-current-stage {
+  color: var(--sapContent_LabelColor);
+  font-style: italic;
+}
+
+.submission-animation {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  margin: 0 auto;
+}
+
+.submission-rings {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.submission-ring {
+  position: absolute;
+  border: 2px solid var(--sapInformationColor);
+  border-radius: 50%;
+  opacity: 0.3;
+}
+
+.submission-rings.active .submission-ring {
+  animation: expandRing 2s infinite ease-out;
+}
+
+.submission-ring-1 {
+  width: 60px;
+  height: 60px;
+  top: 30px;
+  left: 30px;
+  animation-delay: 0s;
+}
+
+.submission-ring-2 {
+  width: 80px;
+  height: 80px;
+  top: 20px;
+  left: 20px;
+  animation-delay: 0.5s;
+}
+
+.submission-ring-3 {
+  width: 100px;
+  height: 100px;
+  top: 10px;
+  left: 10px;
+  animation-delay: 1s;
+}
+
+/* Success View */
+.resolution-success {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  text-align: center;
+}
+
+.success-icon-container {
+  margin-bottom: 2rem;
+}
+
+.success-icon {
+  font-size: 4rem;
+  color: var(--sapPositiveColor);
+  animation: checkmarkBounce 0.6s ease-out;
+}
+
+.success-title {
+  color: var(--sapPositiveColor);
+  margin-bottom: 1rem;
+}
+
+.success-message {
+  color: var(--sapContent_LabelColor);
+  margin-bottom: 2rem;
+  max-width: 400px;
+}
+
+.success-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  text-align: left;
+}
+
+.success-details text {
+  color: var(--sapPositiveColor);
+  font-weight: 500;
+}
+
+.success-actions {
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--sapGroup_ContentBorderColor);
+}
+
+/* Animations */
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+@keyframes stagePulse {
+  0%, 100% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+}
+
+@keyframes expandRing {
+  0% {
+    transform: scale(0.8);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(1.2);
+    opacity: 0;
+  }
+}
+
+@keyframes checkmarkBounce {
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .resolution-submission-dialog {
+    --_ui5_dialog_width: 95vw;
+  }
+  
+  .resolution-submission-content {
+    padding: 1rem;
+  }
+  
+  .summary-metadata {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .resolution-input-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  
+  .resolution-actions {
+    flex-direction: column;
+  }
+}

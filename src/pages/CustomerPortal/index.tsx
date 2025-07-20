@@ -17,15 +17,20 @@ import {
 import { UrgencyLevel, AffectedSystem } from '../../models/types';
 import { ticketService } from '../../services/api/ticketService';
 import { systemStatusService } from '../../services/system/systemStatusService';
+import { useAppState } from '../../contexts/AppStateContext';
 import ErrorSimulator from '../../components/ErrorSimulator';
 import ThreadDecompositionExamples from '../../components/ThreadDecompositionExamples';
 import SystemStatusBanner from '../../components/SystemStatusBanner';
 import LoadingState from '../../components/LoadingState';
 import FeedbackMessage from '../../components/FeedbackMessage';
+import DemoScenarioLoader from '../../components/DemoScenarioLoader';
+import TicketSuccessAnimation from '../../components/TicketSuccessAnimation';
+import CustomerResolutionView from '../../components/CustomerResolutionView';
 import './styles.css';
 
 const CustomerPortal: React.FC = () => {
     const navigate = useNavigate();
+    const { appState } = useAppState();
 
     // Form state
     const [subject, setSubject] = useState('');
@@ -42,6 +47,14 @@ const CustomerPortal: React.FC = () => {
         subject?: string;
         description?: string;
     }>({});
+    
+    // Resolution state - for demo purposes, we'll simulate a resolved ticket
+    const [showResolutionView, setShowResolutionView] = useState(false);
+    const [resolvedTicket, setResolvedTicket] = useState<any>(null);
+    const [resolutionSummary, setResolutionSummary] = useState('');
+
+    // Check if there are any resolved tickets to show the button
+    const hasResolvedTickets = appState.resolvedTickets.length > 0;
 
     // Handle file uploads
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -96,13 +109,7 @@ const CustomerPortal: React.FC = () => {
             setAttachments([]);
 
             // Update workflow state to submission stage
-            // Note: Navigation service integration would be implemented here in a real application
             console.log('Ticket submitted successfully:', ticket);
-
-            // Navigate to dashboard after a delay
-            setTimeout(() => {
-                navigate('/lead-dashboard');
-            }, 3000);
 
         } catch (error) {
             console.error('Error submitting ticket:', error);
@@ -110,6 +117,21 @@ const CustomerPortal: React.FC = () => {
         } finally {
             setIsSubmitting(false);
         }
+    };
+
+    // Handle demo scenario loading
+    const handleScenarioLoad = (scenario: any) => {
+        setSubject(scenario.subject);
+        setDescription(scenario.description);
+        setUrgency(scenario.urgency);
+        setAffectedSystem(scenario.affectedSystem);
+        console.log(`Demo scenario loaded: ${scenario.name}`);
+    };
+
+    // Handle success animation completion
+    const handleSuccessComplete = () => {
+        setShowSuccessDialog(false);
+        navigate('/lead-dashboard');
     };
 
     // Handle scenario selection
@@ -154,9 +176,30 @@ const CustomerPortal: React.FC = () => {
                 justifyContent={FlexBoxJustifyContent.Center}
                 className="customer-portal-container"
             >
-                <div className="customer-portal-header">
-                    <Title level="H1">SAP Customer Support Portal</Title>
-                    <Text>Submit a new support ticket for your SAP system</Text>
+                {showResolutionView ? (
+                    // Show Customer Resolution View
+                    <div className="customer-resolution-container">
+                        <div className="resolution-header">
+                            <Button
+                                design="Default"
+                                icon="nav-back"
+                                onClick={() => setShowResolutionView(false)}
+                                className="back-to-portal-button"
+                            >
+                                Back to Portal
+                            </Button>
+                        </div>
+                        <CustomerResolutionView 
+                            ticket={resolvedTicket} 
+                            resolutionSummary={resolutionSummary}
+                        />
+                    </div>
+                ) : (
+                    // Show normal ticket submission portal
+                    <>
+                        <div className="customer-portal-header">
+                            <Title level="H1">SAP Customer Support Portal</Title>
+                            <Text>Submit a new support ticket for your SAP system</Text>
                     
                     <div className="demo-tools">
                         <FlexBox
@@ -165,6 +208,40 @@ const CustomerPortal: React.FC = () => {
                             justifyContent={FlexBoxJustifyContent.End}
                             className="demo-tools-container"
                         >
+                            {hasResolvedTickets && (
+                                <Button
+                                    design="Positive"
+                                    icon="accept"
+                                    onClick={() => {
+                                        // Use the first resolved ticket from the app state
+                                        const firstResolvedTicket = appState.resolvedTickets[0];
+                                        const resolutionText = `Resolution Summary for Ticket ${firstResolvedTicket.id}:
+
+Issue: ${firstResolvedTicket.subject}
+
+Our technical team has successfully resolved your issue through collaborative analysis and implementation. Here's what was accomplished:
+
+• Database connection timeout investigation: Fixed database connection pool configuration and optimized query performance
+• Email service configuration check: Updated SMTP server settings and resolved authentication issues  
+• Purchase order approval workflow validation: Restored workflow notifications and tested end-to-end functionality
+
+The issue has been fully resolved and all systems are now functioning normally. Our team has tested the solution to ensure stability and performance.
+
+If you experience any further issues or have questions about this resolution, please don't hesitate to contact us.
+
+Best regards,
+SAP Support Team`;
+                                        
+                                        setResolvedTicket(firstResolvedTicket);
+                                        setResolutionSummary(resolutionText);
+                                        setShowResolutionView(true);
+                                    }}
+                                    className="demo-resolution-button"
+                                >
+                                    View Resolved Ticket
+                                </Button>
+                            )}
+                            <DemoScenarioLoader onScenarioLoad={handleScenarioLoad} />
                             <ErrorSimulator onErrorSimulated={handleErrorSimulated} />
                             <ThreadDecompositionExamples onScenarioSelected={handleScenarioSelected} />
                         </FlexBox>
@@ -330,23 +407,15 @@ const CustomerPortal: React.FC = () => {
                         </ul>
                     </div>
                 </Panel>
+                    </>
+                )}
             </FlexBox>
 
-            {showSuccessDialog && (
-                <Dialog
-                    headerText="Ticket Submitted Successfully"
-                    open={showSuccessDialog}
-                    onClose={() => setShowSuccessDialog(false)}
-                >
-                    <div className="success-dialog-content">
-                        <Text>Your ticket has been submitted successfully with ID: {submittedTicketId}</Text>
-                        <Text>Our support team will review your ticket and respond shortly.</Text>
-                    </div>
-                    <div slot="footer" className="dialog-footer">
-                        <Button onClick={() => setShowSuccessDialog(false)}>Close</Button>
-                    </div>
-                </Dialog>
-            )}
+            <TicketSuccessAnimation
+                isOpen={showSuccessDialog}
+                ticketId={submittedTicketId}
+                onComplete={handleSuccessComplete}
+            />
         </div>
     );
 };

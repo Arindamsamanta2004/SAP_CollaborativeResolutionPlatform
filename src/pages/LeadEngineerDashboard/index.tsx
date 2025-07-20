@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Title,
   Text,
@@ -18,7 +18,11 @@ import LeadEngineerAssignment from '../../components/LeadEngineerAssignment';
 import TicketStatistics from '../../components/TicketStatistics';
 import DemoWorkflowTester from '../../components/DemoWorkflowTester';
 import DemoDocumentation from '../../components/DemoDocumentation';
+import CRPAutoLaunch from '../../components/CRPAutoLaunch';
+import CustomerChatPanel from '../../components/CustomerChatPanel';
 import { Ticket } from '../../models/types';
+import { autoLaunchService, CRPLaunchResult } from '../../services/crp/autoLaunchService';
+import { useNavigate } from 'react-router-dom';
 import './styles.css';
 
 const LeadEngineerDashboard: React.FC = () => {
@@ -34,10 +38,33 @@ const LeadEngineerDashboard: React.FC = () => {
   const [activeTab, setActiveTab] = useState<string>("dashboard");
   const [processingTicket, setProcessingTicket] = useState<string | null>(null);
   const [processingProgress, setProcessingProgress] = useState(0);
+  const [autoLaunchTicket, setAutoLaunchTicket] = useState<Ticket | null>(null);
+  const [showAutoLaunch, setShowAutoLaunch] = useState(false);
+  const navigate = useNavigate();
 
   const handleTicketSelect = (ticket: Ticket) => {
     setSelectedTicket(ticket);
   };
+
+  // Auto-launch CRP for qualifying tickets
+  useEffect(() => {
+    const checkForAutoLaunch = async () => {
+      for (const ticket of tickets) {
+        if (ticket.aiClassification && !processingTicket) {
+          const evaluation = await autoLaunchService.evaluateForCRPLaunch(ticket);
+          if (evaluation.shouldLaunch) {
+            setAutoLaunchTicket(ticket);
+            setShowAutoLaunch(true);
+            break; // Only auto-launch one ticket at a time
+          }
+        }
+      }
+    };
+
+    if (tickets.length > 0) {
+      checkForAutoLaunch();
+    }
+  }, [tickets, processingTicket]);
 
   const handleTicketProcess = (ticket: Ticket) => {
     setProcessingTicket(ticket.id);
@@ -68,6 +95,24 @@ const LeadEngineerDashboard: React.FC = () => {
     }
   };
 
+  const handleCRPLaunchComplete = (result: CRPLaunchResult) => {
+    if (result.shouldLaunch && autoLaunchTicket) {
+      // Navigate to CRP detail page
+      navigate(`/crp/${autoLaunchTicket.id}`);
+      
+      // Update ticket context with CRP launch
+      triggerCRP(autoLaunchTicket);
+    }
+    
+    setShowAutoLaunch(false);
+    setAutoLaunchTicket(null);
+  };
+
+  const handleAutoLaunchClose = () => {
+    setShowAutoLaunch(false);
+    setAutoLaunchTicket(null);
+  };
+
   if (loading) {
     return (
       <div className="lead-dashboard-loading">
@@ -82,12 +127,23 @@ const LeadEngineerDashboard: React.FC = () => {
       <Bar
         startContent={<Title>Lead Engineer Dashboard</Title>}
         endContent={
-          <Button
-            icon="refresh"
-            design="Transparent"
-            onClick={() => refreshTickets()}
-            tooltip="Refresh tickets"
-          />
+          <div className="dashboard-header-actions">
+            <Button
+              icon="collaborate"
+              design="Emphasized"
+              onClick={() => navigate('/crp')}
+              tooltip="Go to CRP Dashboard"
+              className="crp-dashboard-button"
+            >
+              CRP Dashboard
+            </Button>
+            <Button
+              icon="refresh"
+              design="Transparent"
+              onClick={() => refreshTickets()}
+              tooltip="Refresh tickets"
+            />
+          </div>
         }
       />
 
@@ -102,7 +158,7 @@ const LeadEngineerDashboard: React.FC = () => {
               hideCloseButton
               className="dashboard-info-strip"
             >
-              This dashboard demonstrates AI-powered ticket classification and routing based on the 70% skill dominance rule.
+              This dashboard demonstrates AI-powered ticket classification with automatic CRP launch for complex tickets and experience-based lead engineer assignment.
             </MessageStrip>
 
             <Grid defaultSpan="XL6 L6 M12 S12" className="dashboard-grid">
@@ -163,6 +219,35 @@ const LeadEngineerDashboard: React.FC = () => {
           </div>
         </Tab>
         
+        <Tab text="Customer Communication" key="communication" data-key="communication" selected={activeTab === "communication"}>
+          <div className="communication-content">
+            <MessageStrip
+              design="Information"
+              hideCloseButton
+              className="dashboard-info-strip"
+            >
+              Communicate directly with customers about their tickets. Chat remains available for follow-up questions after resolution.
+            </MessageStrip>
+            
+            <Grid defaultSpan="XL12 L12 M12 S12" className="communication-grid">
+              {selectedTicket ? (
+                <CustomerChatPanel 
+                  ticket={selectedTicket} 
+                  isResolved={selectedTicket.status === 'Resolved'}
+                />
+              ) : (
+                <Card className="empty-state-card">
+                  <IllustratedMessage
+                    name="NoEntries"
+                    titleText="Select a ticket to start communication"
+                    subtitleText="Choose a ticket from the Dashboard tab to chat with the customer"
+                  />
+                </Card>
+              )}
+            </Grid>
+          </div>
+        </Tab>
+        
         <Tab text="Demo Workflow Testing" key="testing" data-key="testing" selected={activeTab === "testing"}>
           <div className="testing-content">
             <MessageStrip
@@ -180,6 +265,16 @@ const LeadEngineerDashboard: React.FC = () => {
           </div>
         </Tab>
       </TabContainer>
+
+      {/* CRP Auto-Launch Dialog */}
+      {autoLaunchTicket && (
+        <CRPAutoLaunch
+          ticket={autoLaunchTicket}
+          isOpen={showAutoLaunch}
+          onClose={handleAutoLaunchClose}
+          onLaunchComplete={handleCRPLaunchComplete}
+        />
+      )}
     </div>
   );
 };

@@ -1,0 +1,122 @@
+.demo-scenario-trigger {
+  margin: 0.5rem;
+}
+
+.demo-scenario-dialog {
+  --_ui5_dialog_content_min_height: 60vh;
+  --_ui5_dialog_content_max_height: 80vh;
+  --_ui5_dialog_width: 800px;
+}
+
+.demo-scenario-content {
+  padding: 1rem;
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+.demo-scenario-header {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--sapGroup_ContentBorderColor);
+}
+
+.demo-scenario-subtitle {
+  color: var(--sapContent_LabelColor);
+  margin-top: 0.5rem;
+}
+
+.demo-scenarios-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.demo-scenario-card {
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 2px solid transparent;
+}
+
+.demo-scenario-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border-color: var(--sapButton_Emphasized_BorderColor);
+}
+
+.demo-scenario-details {
+  padding: 1rem;
+}
+
+.scenario-metadata {
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.scenario-skills {
+  margin-bottom: 1rem;
+}
+
+.skills-label {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.skills-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+}
+
+.scenario-prediction {
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+  background-color: var(--sapInfobar_Background);
+  border-radius: 0.25rem;
+}
+
+.prediction-icon {
+  margin-right: 0.5rem;
+}
+
+.prediction-icon.crp-launch {
+  color: var(--sapPositiveColor);
+}
+
+.prediction-icon.standard-queue {
+  color: var(--sapInformationColor);
+}
+
+.prediction-text {
+  font-weight: 600;
+}
+
+.scenario-description {
+  color: var(--sapContent_LabelColor);
+  font-size: 0.875rem;
+  line-height: 1.4;
+}
+
+.demo-scenario-actions {
+  padding-top: 1rem;
+  border-top: 1px solid var(--sapGroup_ContentBorderColor);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .demo-scenario-dialog {
+    --_ui5_dialog_width: 95vw;
+  }
+  
+  .scenario-metadata {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .skills-tags {
+    justify-content: flex-start;
+  }
+}

@@ -28,6 +28,7 @@ import SolutionMergePanel from '../../components/SolutionMergePanel';
 import EngineerAvailabilityMonitor from '../../components/EngineerAvailabilityMonitor';
 import ConnectionStatusPanel from '../../components/ConnectionStatusPanel';
 import WorkflowIndicator from '../../components/WorkflowIndicator';
+import ResolutionSubmissionDialog from '../../components/ResolutionSubmissionDialog';
 import { navigationService } from '../../services/navigation/navigationService';
 import './styles.css';
 
@@ -39,6 +40,8 @@ const CRPDetail: React.FC = () => {
   const [ticket, setTicket] = useState<Ticket | null>(null);
   const [threads, setThreads] = useState<IssueThread[]>([]);
   const [showCompletionDialog, setShowCompletionDialog] = useState(false);
+  const [showResolutionSubmission, setShowResolutionSubmission] = useState(false);
+  const [isResolutionSubmitted, setIsResolutionSubmitted] = useState(false);
   const [collaborationStats, setCollaborationStats] = useState({
     totalThreads: 0,
     assignedThreads: 0,
@@ -235,17 +238,37 @@ const CRPDetail: React.FC = () => {
         </div>
 
         {/* Solution Merge Panel - Only show when there are resolved threads */}
-        {collaborationStats.resolvedThreads > 0 && (
+        {collaborationStats.resolvedThreads > 0 && !isResolutionSubmitted && (
           <SolutionMergePanel 
             ticket={ticket} 
             threads={threads}
             onResolutionComplete={() => {
               // Update workflow state to completion stage
               navigationService.updateWorkflowStage('completion', ticket);
-              // Show completion dialog
-              setShowCompletionDialog(true);
+              // Show resolution submission dialog
+              setShowResolutionSubmission(true);
             }}
           />
+        )}
+
+        {/* Resolution Submitted Message */}
+        {isResolutionSubmitted && (
+          <Card className="resolution-submitted-card">
+            <div className="resolution-submitted-content">
+              <Icon name="accept" className="resolution-submitted-icon" />
+              <div className="resolution-submitted-text">
+                <Title level="H3">Resolution Submitted to Customer</Title>
+                <Text>The customer has been notified and can now view the resolution details in their portal.</Text>
+              </div>
+              <Button
+                design="Emphasized"
+                icon="nav-back"
+                onClick={() => navigate('/lead-dashboard')}
+              >
+                Return to Dashboard
+              </Button>
+            </div>
+          </Card>
         )}
 
         <Grid defaultSpan="XL8 L8 M12 S12" className="crp-dashboard-grid">
@@ -302,48 +325,21 @@ const CRPDetail: React.FC = () => {
         </Grid>
       </div>
       
-      {/* Resolution Completion Dialog */}
-      {showCompletionDialog && (
-        <Dialog
-          headerText="Resolution Complete"
-          open={showCompletionDialog}
-          onClose={() => setShowCompletionDialog(false)}
-          className="completion-dialog"
-        >
-          <div className="completion-dialog-content">
-            <div className="completion-icon-container">
-              <Icon name="complete" className="completion-icon" />
-            </div>
-            <Title level="H2">Ticket Successfully Resolved</Title>
-            <Text>All issue threads have been resolved and the solution has been merged.</Text>
-            <Text>Ticket ID: {ticket.id}</Text>
-            <Text>Resolution Time: {Math.floor(Math.random() * 24) + 1} hours</Text>
-            
-            <div className="completion-stats">
-              <div className="completion-stat-item">
-                <div className="completion-stat-value">{collaborationStats.totalThreads}</div>
-                <div className="completion-stat-label">Threads Resolved</div>
-              </div>
-              <div className="completion-stat-item">
-                <div className="completion-stat-value">{collaborationStats.activeEngineers}</div>
-                <div className="completion-stat-label">Engineers Involved</div>
-              </div>
-            </div>
-            
-            <div className="completion-actions">
-              <Button 
-                design="Emphasized" 
-                onClick={() => {
-                  setShowCompletionDialog(false);
-                  navigate('/lead-dashboard');
-                }}
-              >
-                Return to Dashboard
-              </Button>
-            </div>
-          </div>
-        </Dialog>
-      )}
+      {/* Resolution Submission Dialog */}
+      <ResolutionSubmissionDialog
+        isOpen={showResolutionSubmission}
+        ticket={ticket}
+        threads={threads}
+        onClose={() => setShowResolutionSubmission(false)}
+        onSubmitToCustomer={(resolutionSummary) => {
+          console.log('Resolution submitted to customer:', resolutionSummary);
+          setIsResolutionSubmitted(true);
+          setShowResolutionSubmission(false);
+          
+          // Update workflow state to completion
+          navigationService.updateWorkflowStage('completion', ticket);
+        }}
+      />
     </div>
   );
 };

@@ -1,0 +1,261 @@
+.crp-list-page {
+  padding: 0;
+  min-height: 100vh;
+  background-color: var(--sapBackgroundColor);
+}
+
+.crp-list-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 50vh;
+  gap: 1rem;
+}
+
+.crp-list-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.crp-header-icon {
+  color: var(--sapButton_Emphasized_Background);
+  font-size: 1.5rem;
+}
+
+.crp-list-actions {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.crp-list-content {
+  padding: 1rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.crp-info-strip {
+  margin-bottom: 1.5rem;
+}
+
+/* Filter Tabs */
+.crp-filter-tabs {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  background-color: var(--sapGroup_ContentBackground);
+  border-radius: 0.5rem;
+  border: 1px solid var(--sapGroup_ContentBorderColor);
+}
+
+.filter-tab {
+  flex: 1;
+  min-width: 150px;
+}
+
+/* CRP Tickets Grid */
+.crp-tickets-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.crp-ticket-card {
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 2px solid transparent;
+  height: fit-content;
+}
+
+.crp-ticket-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border-color: var(--sapButton_Emphasized_BorderColor);
+}
+
+.crp-ticket-content {
+  padding: 1rem;
+}
+
+.ticket-metadata {
+  margin-bottom: 1rem;
+}
+
+.metadata-badges {
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.ticket-description {
+  margin-bottom: 1rem;
+  color: var(--sapContent_LabelColor);
+  line-height: 1.4;
+}
+
+.thread-summary {
+  margin-bottom: 1rem;
+  padding: 0.75rem;
+  background-color: var(--sapInfobar_Background);
+  border-radius: 0.25rem;
+}
+
+.thread-info {
+  margin-bottom: 0.5rem;
+}
+
+.thread-stats {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.thread-icon {
+  color: var(--sapInformationColor);
+}
+
+.thread-count {
+  font-weight: 600;
+}
+
+.progress-text {
+  font-weight: 600;
+  color: var(--sapContent_LabelColor);
+}
+
+.ticket-progress-bar {
+  margin-top: 0.5rem;
+}
+
+.required-skills {
+  margin-bottom: 1rem;
+}
+
+.skills-label {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.skills-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+}
+
+.crp-actions {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--sapGroup_ContentBorderColor);
+}
+
+/* Empty State */
+.empty-state-card {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 2rem;
+}
+
+/* Summary Statistics */
+.crp-summary-card {
+  margin-top: 2rem;
+}
+
+.crp-summary-content {
+  padding: 1rem;
+}
+
+.summary-grid {
+  gap: 1rem;
+}
+
+.summary-stat {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background-color: var(--sapGroup_ContentBackground);
+  border-radius: 0.5rem;
+  border: 1px solid var(--sapGroup_ContentBorderColor);
+}
+
+.stat-icon {
+  font-size: 2rem;
+  color: var(--sapButton_Emphasized_Background);
+  flex-shrink: 0;
+}
+
+.stat-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.stat-number {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--sapButton_Emphasized_Background);
+}
+
+.stat-label {
+  color: var(--sapContent_LabelColor);
+  font-size: 0.875rem;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .crp-tickets-grid {
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .crp-list-content {
+    padding: 0.5rem;
+  }
+  
+  .crp-tickets-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .crp-filter-tabs {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .filter-tab {
+    min-width: auto;
+  }
+  
+  .crp-list-actions {
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+  
+  .summary-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .crp-list-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+  }
+  
+  .summary-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .summary-stat {
+    flex-direction: column;
+    text-align: center;
+    gap: 0.5rem;
+  }
+}

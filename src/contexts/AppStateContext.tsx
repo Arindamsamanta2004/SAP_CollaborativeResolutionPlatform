@@ -53,12 +53,12 @@ export const AppStateProvider: React.FC<AppStateProviderProps> = ({ children }) 
         console.error('Error parsing saved app state:', error);
       }
     }
-    
-    // Default initial state
+
+    // Default initial state - start with no resolved tickets for clean demo
     return {
       engineers: [...mockEngineers],
       activeTickets: mockTickets.filter(ticket => ticket.status !== 'Resolved'),
-      resolvedTickets: mockTickets.filter(ticket => ticket.status === 'Resolved'),
+      resolvedTickets: [], // Start with no resolved tickets on first launch
       activeThreads: mockTickets
         .filter(ticket => ticket.threads)
         .flatMap(ticket => ticket.threads || []),
@@ -108,19 +108,19 @@ export const AppStateProvider: React.FC<AppStateProviderProps> = ({ children }) 
       case 'ENGINEER_UPDATE':
         setAppState(prevState => ({
           ...prevState,
-          engineers: prevState.engineers.map(eng => 
+          engineers: prevState.engineers.map(eng =>
             eng.id === message.data.id ? { ...eng, ...message.data } : eng
           ),
           lastActivity: new Date()
         }));
         break;
-      
+
       case 'TICKET_UPDATE':
         setAppState(prevState => {
-          const updatedActiveTickets = prevState.activeTickets.map(ticket => 
+          const updatedActiveTickets = prevState.activeTickets.map(ticket =>
             ticket.id === message.data.id ? { ...ticket, ...message.data } : ticket
           );
-          
+
           // If ticket status changed to Resolved, move it to resolvedTickets
           if (message.data.status === 'Resolved') {
             const ticketToMove = updatedActiveTickets.find(t => t.id === message.data.id);
@@ -133,7 +133,7 @@ export const AppStateProvider: React.FC<AppStateProviderProps> = ({ children }) 
               };
             }
           }
-          
+
           return {
             ...prevState,
             activeTickets: updatedActiveTickets,
@@ -141,17 +141,17 @@ export const AppStateProvider: React.FC<AppStateProviderProps> = ({ children }) 
           };
         });
         break;
-      
+
       case 'THREAD_UPDATE':
         setAppState(prevState => ({
           ...prevState,
-          activeThreads: prevState.activeThreads.map(thread => 
+          activeThreads: prevState.activeThreads.map(thread =>
             thread.id === message.data.id ? { ...thread, ...message.data } : thread
           ),
           lastActivity: new Date()
         }));
         break;
-      
+
       default:
         console.log('Unknown message type:', message.type);
     }
@@ -161,7 +161,7 @@ export const AppStateProvider: React.FC<AppStateProviderProps> = ({ children }) 
   const updateEngineerAvailability = (engineerId: string, availability: 'Available' | 'Busy' | 'Offline') => {
     setAppState(prevState => ({
       ...prevState,
-      engineers: prevState.engineers.map(eng => 
+      engineers: prevState.engineers.map(eng =>
         eng.id === engineerId ? { ...eng, availability } : eng
       ),
       lastActivity: new Date()
@@ -181,7 +181,7 @@ export const AppStateProvider: React.FC<AppStateProviderProps> = ({ children }) 
   const updateEngineerWorkload = (engineerId: string, workload: number) => {
     setAppState(prevState => ({
       ...prevState,
-      engineers: prevState.engineers.map(eng => 
+      engineers: prevState.engineers.map(eng =>
         eng.id === engineerId ? { ...eng, currentWorkload: workload } : eng
       ),
       lastActivity: new Date()
@@ -201,33 +201,33 @@ export const AppStateProvider: React.FC<AppStateProviderProps> = ({ children }) 
   const assignThreadToEngineer = (threadId: string, engineerId: string) => {
     // Update the thread
     setAppState(prevState => {
-      const updatedThreads = prevState.activeThreads.map(thread => 
-        thread.id === threadId 
-          ? { 
-              ...thread, 
-              assignedEngineerId: engineerId, 
-              status: 'In Progress' as const,
-              updatedAt: new Date()
-            } 
+      const updatedThreads = prevState.activeThreads.map(thread =>
+        thread.id === threadId
+          ? {
+            ...thread,
+            assignedEngineerId: engineerId,
+            status: 'In Progress' as const,
+            updatedAt: new Date()
+          }
           : thread
       );
 
       // Find the engineer and update workload
       const engineer = prevState.engineers.find(eng => eng.id === engineerId);
       let updatedEngineers = [...prevState.engineers];
-      
+
       if (engineer) {
         // Increase workload by 10-20% when taking a new thread
         const workloadIncrease = Math.floor(Math.random() * 11) + 10; // 10-20
         const newWorkload = Math.min(100, engineer.currentWorkload + workloadIncrease);
-        
-        updatedEngineers = prevState.engineers.map(eng => 
-          eng.id === engineerId 
-            ? { 
-                ...eng, 
-                currentWorkload: newWorkload,
-                availability: newWorkload >= 80 ? 'Busy' : 'Available'
-              } 
+
+        updatedEngineers = prevState.engineers.map(eng =>
+          eng.id === engineerId
+            ? {
+              ...eng,
+              currentWorkload: newWorkload,
+              availability: newWorkload >= 80 ? 'Busy' : 'Available'
+            }
             : eng
         );
       }
@@ -255,36 +255,36 @@ export const AppStateProvider: React.FC<AppStateProviderProps> = ({ children }) 
   const completeThread = (threadId: string, solution: string) => {
     setAppState(prevState => {
       // Update the thread
-      const updatedThreads = prevState.activeThreads.map(thread => 
-        thread.id === threadId 
-          ? { 
-              ...thread, 
-              status: 'Resolved' as const,
-              solution,
-              updatedAt: new Date()
-            } 
+      const updatedThreads = prevState.activeThreads.map(thread =>
+        thread.id === threadId
+          ? {
+            ...thread,
+            status: 'Resolved' as const,
+            solution,
+            updatedAt: new Date()
+          }
           : thread
       );
 
       // Find the engineer and update workload
       const thread = prevState.activeThreads.find(t => t.id === threadId);
       let updatedEngineers = [...prevState.engineers];
-      
+
       if (thread && thread.assignedEngineerId) {
         const engineer = prevState.engineers.find(eng => eng.id === thread.assignedEngineerId);
-        
+
         if (engineer) {
           // Decrease workload by 10-20% when completing a thread
           const workloadDecrease = Math.floor(Math.random() * 11) + 10; // 10-20
           const newWorkload = Math.max(0, engineer.currentWorkload - workloadDecrease);
-          
-          updatedEngineers = prevState.engineers.map(eng => 
-            eng.id === thread.assignedEngineerId 
-              ? { 
-                  ...eng, 
-                  currentWorkload: newWorkload,
-                  availability: newWorkload < 80 ? 'Available' : 'Busy'
-                } 
+
+          updatedEngineers = prevState.engineers.map(eng =>
+            eng.id === thread.assignedEngineerId
+              ? {
+                ...eng,
+                currentWorkload: newWorkload,
+                availability: newWorkload < 80 ? 'Available' : 'Busy'
+              }
               : eng
           );
         }
@@ -296,23 +296,23 @@ export const AppStateProvider: React.FC<AppStateProviderProps> = ({ children }) 
         const parentTicketId = completedThread.parentTicketId;
         const allThreadsForTicket = updatedThreads.filter(t => t.parentTicketId === parentTicketId);
         const allThreadsResolved = allThreadsForTicket.every(t => t.status === 'Resolved');
-        
+
         // If all threads are resolved, update the parent ticket status
         if (allThreadsResolved) {
-          const updatedActiveTickets = prevState.activeTickets.map(ticket => 
-            ticket.id === parentTicketId 
-              ? { 
-                  ...ticket, 
-                  status: 'Resolved' as const,
-                  updatedAt: new Date(),
-                  resolvedAt: new Date()
-                } 
+          const updatedActiveTickets = prevState.activeTickets.map(ticket =>
+            ticket.id === parentTicketId
+              ? {
+                ...ticket,
+                status: 'Resolved' as const,
+                updatedAt: new Date(),
+                resolvedAt: new Date()
+              }
               : ticket
           );
-          
+
           // Move the ticket to resolved tickets
           const ticketToMove = updatedActiveTickets.find(t => t.id === parentTicketId);
-          
+
           if (ticketToMove) {
             return {
               ...prevState,
@@ -350,7 +350,7 @@ export const AppStateProvider: React.FC<AppStateProviderProps> = ({ children }) 
     setAppState({
       engineers: [...mockEngineers],
       activeTickets: mockTickets.filter(ticket => ticket.status !== 'Resolved'),
-      resolvedTickets: mockTickets.filter(ticket => ticket.status === 'Resolved'),
+      resolvedTickets: [], // Reset to no resolved tickets for clean demo restart
       activeThreads: mockTickets
         .filter(ticket => ticket.threads)
         .flatMap(ticket => ticket.threads || []),
